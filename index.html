@@ -2,8 +2,11 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="32x32" href="иконка.jpeg">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yetifit | Спортмагазин — отзывы и оценки</title>
+    <title>Yetifit | Экипировка для активных</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style id="theme-style">
@@ -34,20 +37,87 @@
         .logo h1 { font-size: 28px; font-weight: 800; background: linear-gradient(135deg, var(--accent-color), #c4121a); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .logo span { font-size: 12px; color: var(--text-secondary); display: block; }
         .header-actions { display: flex; gap: 25px; }
-        .header-actions .action-icon { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; transition: 0.2s; color: var(--text-primary); }
+        .header-actions .action-icon { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; transition: 0.2s; color: var(--text-primary); position: relative; }
         .header-actions .action-icon:hover { color: var(--accent-color); text-shadow: var(--glow-effect); }
         .action-icon i { font-size: 22px; }
         .action-icon span { font-size: 12px; font-weight: 500; }
         .badge { background: var(--accent-color); color: white; border-radius: 30px; padding: 2px 8px; font-size: 11px; margin-left: 5px; }
+        .compare-badge { background: var(--accent-color); color: white; border-radius: 30px; padding: 2px 8px; font-size: 11px; margin-left: 5px; }
 
-        .catalog-layout { display: flex; gap: 30px; }
-        .filters-sidebar { width: 280px; flex-shrink: 0; background: var(--bg-card); border-radius: 20px; padding: 20px; border: 1px solid var(--border-color); position: sticky; top: 120px; height: fit-content; }
-        .filters-sidebar h3 { font-size: 18px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--accent-color); display: inline-block; }
-        .filter-section { margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
-        .filter-section-header { font-weight: 700; font-size: 14px; color: var(--text-primary); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .catalog-layout { display: flex; gap: 30px; align-items: flex-start; }
+        .filters-sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            max-height: calc(100vh - 140px);
+            display: flex;
+            flex-direction: column;
+        }
+        .filters-header {
+            flex-shrink: 0;
+        }
+        .filters-header h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+        }
+        .filters-scroll-area {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            margin-top: 10px;
+            padding-right: 8px;
+        }
+        .filters-scroll-area::-webkit-scrollbar {
+            width: 6px;
+        }
+        .filters-scroll-area::-webkit-scrollbar-track {
+            background: var(--stat-bg);
+            border-radius: 10px;
+        }
+        .filters-scroll-area::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 10px;
+        }
+        .filters-scroll-area::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+        }
+        .filter-section {
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+        .filter-section:last-child {
+            border-bottom: none;
+        }
+        .filter-section-header {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
         .filter-section-header i { transition: transform 0.2s; }
         .filter-section-header.collapsed i { transform: rotate(-90deg); }
-        .filter-options { display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow-y: auto; padding-right: 5px; }
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
         .filter-options.collapsed { display: none; }
         .filter-option { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
         .filter-option input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent-color); }
@@ -57,7 +127,14 @@
         .price-range input { width: 100px; padding: 8px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--input-bg); color: var(--text-primary); }
         .rating-range { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
         .rating-range input { width: 70px; padding: 8px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--input-bg); color: var(--text-primary); }
-        .filter-buttons { margin-top: 20px; display: flex; gap: 10px; }
+        .filter-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
         .filter-buttons button { flex: 1; padding: 10px; border-radius: 40px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .btn-apply { background: var(--accent-color); color: white; }
         .btn-apply:hover { background: var(--accent-hover); box-shadow: var(--glow-effect); }
@@ -81,13 +158,148 @@
         .product-rating { color: #ffb800; font-size: 13px; margin-bottom: 12px; }
         .product-description { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.5; word-wrap: break-word; overflow-wrap: break-word; white-space: normal; word-break: break-word; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .card-buttons { display: flex; gap: 10px; }
-        .btn-inv, .btn-fav { flex: 1; padding: 10px; border-radius: 40px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-inv, .btn-fav, .btn-compare { flex: 1; padding: 10px; border-radius: 40px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-inv { background: var(--btn-bg); color: white; }
         .btn-inv.in-inventory { background: #10b981; color: white; }
         .btn-inv:hover { background: var(--accent-color); box-shadow: var(--glow-effect); }
         .btn-fav { background: var(--stat-bg); color: var(--text-secondary); border: 1px solid var(--border-color); }
         .btn-fav.active { background: rgba(var(--accent-rgb), 0.15); color: var(--accent-color); border-color: var(--accent-color); }
         .btn-fav:hover { background: rgba(var(--accent-rgb), 0.25); }
+        .btn-compare { background: var(--stat-bg); color: var(--text-secondary); border: 1px solid var(--border-color); }
+        .btn-compare.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
+        .btn-compare:hover { background: rgba(var(--accent-rgb), 0.25); }
+
+        /* Стили для магазинов */
+        .shop-link-item {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .shop-link-item select, .shop-link-item input {
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            flex: 1;
+        }
+        .remove-shop-link {
+            background: rgba(var(--accent-rgb), 0.15);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            color: var(--accent-color);
+            transition: 0.2s;
+        }
+        .remove-shop-link:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+        .shops-icons {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .shop-icon {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--stat-bg);
+            border-radius: 50%;
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+        .shop-icon:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.1);
+        }
+        .more-shops {
+            font-size: 11px;
+            color: var(--text-secondary);
+            background: var(--stat-bg);
+            padding: 0 10px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 600;
+        }
+        .detail-shops {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(var(--accent-rgb), 0.05);
+            border-radius: 16px;
+        }
+        .detail-shops h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: var(--accent-color);
+        }
+        .shops-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .shop-link {
+            background: var(--bg-card);
+            padding: 8px 16px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .shop-link:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+            border-color: var(--accent-color);
+        }
+
+        .compare-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 2100; justify-content: center; align-items: center; }
+        .compare-modal.active { display: flex; }
+        .compare-modal-content { background: var(--modal-bg); border-radius: 28px; max-width: 1400px; width: 95%; max-height: 85vh; overflow-y: auto; position: relative; border: 2px solid var(--accent-color); }
+        .compare-close { position: sticky; top: 15px; right: 25px; float: right; background: var(--bg-card); border: none; font-size: 28px; cursor: pointer; color: var(--text-secondary); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 15px; }
+        .compare-close:hover { background: var(--accent-color); color: white; }
+        .compare-header { padding: 20px 30px 0 30px; }
+        .compare-header h2 { color: var(--accent-color); margin-bottom: 10px; }
+        .compare-toolbar { display: flex; gap: 15px; margin: 15px 30px; padding: 10px; background: var(--stat-bg); border-radius: 12px; align-items: center; flex-wrap: wrap; }
+        .compare-toolbar button { background: var(--btn-bg); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.2s; }
+        .compare-toolbar button:hover { background: var(--accent-color); box-shadow: var(--glow-effect); }
+        .compare-toolbar .active-view { background: var(--accent-color); }
+        .compare-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; }
+        .compare-table th, .compare-table td { padding: 15px 20px; border-bottom: 1px solid var(--border-color); vertical-align: top; text-align: left; }
+        .compare-table th { background: rgba(var(--accent-rgb), 0.08); font-weight: 700; color: var(--text-primary); width: 200px; font-size: 14px; border-right: 1px solid var(--border-color); }
+        .compare-table td { background: var(--bg-card); font-size: 14px; line-height: 1.5; }
+        .compare-table tr:hover td { background: rgba(var(--accent-rgb), 0.03); }
+        .compare-product-cell { text-align: center; min-width: 250px; background: var(--bg-card); }
+        .compare-product-img { width: 150px; height: 150px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; background: var(--stat-bg); border-radius: 12px; overflow: hidden; }
+        .compare-product-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .compare-product-img i { font-size: 60px; color: var(--accent-color); }
+        .compare-product-title { font-weight: 700; margin: 10px 0; font-size: 16px; }
+        .compare-product-price { font-size: 20px; font-weight: 800; color: var(--accent-color); margin: 10px 0; }
+        .compare-remove { background: rgba(var(--accent-rgb), 0.15); border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; color: var(--accent-color); font-size: 12px; margin-top: 10px; transition: 0.2s; }
+        .compare-remove:hover { background: var(--accent-color); color: white; }
+        .compare-empty { text-align: center; padding: 60px; color: var(--text-secondary); }
+        .compare-empty i { font-size: 80px; margin-bottom: 20px; color: var(--accent-color); }
+        .compare-clear-btn { background: var(--btn-bg); color: white; border: none; padding: 12px 24px; border-radius: 40px; cursor: pointer; margin: 15px; font-weight: 600; transition: 0.2s; }
+        .compare-clear-btn:hover { background: var(--accent-color); }
+        .spec-value-highlight { color: var(--accent-color); font-weight: 600; }
+        .spec-value-normal { color: var(--text-primary); }
 
         .detail-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
         .detail-modal.active { display: flex; }
@@ -147,7 +359,7 @@
         .detail-btn-cart:hover { background: var(--accent-color); box-shadow: var(--glow-effect); }
         .detail-btn-fav { background: var(--stat-bg); color: var(--text-secondary); border: 1px solid var(--border-color); }
         .detail-btn-fav.active { background: rgba(var(--accent-rgb), 0.15); color: var(--accent-color); border-color: var(--accent-color); }
-        @media (max-width: 768px) { .catalog-layout { flex-direction: column; } .filters-sidebar { width: 100%; position: static; } .detail-title { font-size: 20px; } .detail-price { font-size: 24px; } .detail-specs-grid { grid-template-columns: 1fr; } .rate-star { font-size: 22px; } }
+        @media (max-width: 768px) { .catalog-layout { flex-direction: column; } .filters-sidebar { width: 100%; position: static; max-height: 400px; } .detail-title { font-size: 20px; } .detail-price { font-size: 24px; } .detail-specs-grid { grid-template-columns: 1fr; } .rate-star { font-size: 22px; } .compare-table th, .compare-table td { padding: 10px; font-size: 12px; } .compare-table th { width: 120px; } .compare-product-img { width: 100px; height: 100px; } }
 
         .dashboard-container { max-width: 800px; margin: 0 auto; }
         .dashboard-card { background: var(--bg-card); border-radius: 24px; padding: 30px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid var(--border-color); }
@@ -170,7 +382,7 @@
         .admin-actions { display: flex; gap: 8px; margin-top: 10px; }
         .edit-product-btn { background: #ffc107; color: #333; border: none; padding: 8px; border-radius: 40px; width: 50%; cursor: pointer; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px; }
         .edit-product-btn:hover { background: #e0a800; box-shadow: var(--glow-effect); }
-        .delete-product-btn { background: rgba(var(--accent-rgb), 0.15); border: none; padding: 8px; border-radius: 40px; width: 50%; cursor: pointer; font-weight: 600; colour: var(--accent-color); transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .delete-product-btn { background: rgba(var(--accent-rgb), 0.15); border: none; padding: 8px; border-radius: 40px; width: 50%; cursor: pointer; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px; color: var(--accent-color); }
         .delete-product-btn:hover { background: var(--accent-color); color: white; box-shadow: var(--glow-effect); }
 
         .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
@@ -237,12 +449,6 @@
     </style>
 </head>
 <body>
-<div class="top-bar">
-    <div class="container">
-        <span>🚚 Бесплатная доставка от 5 000 ₽</span>
-        <span>🏆 Официальный дилер Yetifit</span>
-    </div>
-</div>
 <div class="main-header">
     <div class="container header-content">
         <div class="logo">
@@ -250,6 +456,7 @@
             <span>Экипировка для активных</span>
         </div>
         <div class="header-actions">
+            <div class="action-icon" id="openCompareBtnHeader"><i class="fas fa-chart-line"></i><span>Сравнить <span id="compareCountHeader" class="badge">0</span></span></div>
             <div class="action-icon" id="openFavBtnHeader"><i class="far fa-heart"></i><span>Избранное <span id="favCountHeader" class="badge">0</span></span></div>
             <div class="action-icon" id="openInventoryBtnHeader"><i class="fas fa-boxes"></i><span>Инвентарь <span id="inventoryCountHeader" class="badge">0</span></span></div>
             <div class="action-icon" id="openLoginBtnHeader"><i class="fas fa-user"></i><span id="loginBtnText">Войти</span></div>
@@ -275,18 +482,25 @@
     <div class="tab-pane active-pane" id="catalog-tab">
         <div class="catalog-layout">
             <div class="filters-sidebar">
-                <h3>Фильтры</h3>
-                <div class="filter-section"><div class="filter-section-header" data-section="price"><span>💰 Стоимость, ₽</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="price-options"><div class="price-range"><input type="number" id="priceMin" placeholder="от" value="0"><span>-</span><input type="number" id="priceMax" placeholder="до" value="100000"></div></div></div>
-                <div class="filter-section"><div class="filter-section-header" data-section="rating"><span>⭐ Рейтинг</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="rating-options"><div class="rating-range"><input type="number" id="ratingMin" placeholder="от" step="0.1" min="0" max="5" value="0"><span>-</span><input type="number" id="ratingMax" placeholder="до" step="0.1" min="0" max="5" value="5"></div></div></div>
-                <div class="filter-section"><div class="filter-section-header" data-section="country"><span>🌍 Страна</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="country-options"></div></div>
-                <div class="filter-section"><div class="filter-section-header" data-section="brand"><span>🏭 Фирма/Бренд</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="brand-options"></div></div>
-                <div class="filter-section"><div class="filter-section-header" data-section="year"><span>📅 Год выпуска</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="year-options"></div></div>
-                <div class="filter-section"><div class="filter-section-header" data-section="length"><span>📏 Рост лыжи, см</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="length-options"></div></div>
-                <div class="filter-section"><div class="filter-section-header" data-section="stiffness"><span>💪 Жёсткость, кг</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="stiffness-options"></div></div>
-                <div class="filter-section"><div class="filter-section-header" data-section="trackType"><span>🏔️ Тип трассы</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="trackType-options"></div></div>
-                <div class="filter-section"><div class="filter-section-header" data-section="level"><span>🎯 Уровень</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="level-options"></div></div>
-                <div class="filter-section"><div class="filter-section-header" data-section="style"><span>⛷️ Стиль</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="style-options"></div></div>
-                <div class="filter-buttons"><button class="btn-apply" id="applyFiltersBtn">Применить</button><button class="btn-reset-filters" id="resetFiltersBtn">Сбросить</button></div>
+                <div class="filters-header">
+                    <h3>Фильтры</h3>
+                </div>
+                <div class="filters-scroll-area">
+                    <div class="filter-section"><div class="filter-section-header" data-section="price"><span>💰 Стоимость, ₽</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="price-options"><div class="price-range"><input type="number" id="priceMin" placeholder="от" value="0"><span>-</span><input type="number" id="priceMax" placeholder="до" value="100000"></div></div></div>
+                    <div class="filter-section"><div class="filter-section-header" data-section="rating"><span>⭐ Рейтинг</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="rating-options"><div class="rating-range"><input type="number" id="ratingMin" placeholder="от" step="0.1" min="0" max="5" value="0"><span>-</span><input type="number" id="ratingMax" placeholder="до" step="0.1" min="0" max="5" value="5"></div></div></div>
+                    <div class="filter-section"><div class="filter-section-header" data-section="country"><span>🌍 Страна</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="country-options"></div></div>
+                    <div class="filter-section"><div class="filter-section-header" data-section="brand"><span>🏭 Фирма/Бренд</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="brand-options"></div></div>
+                    <div class="filter-section"><div class="filter-section-header" data-section="year"><span>📅 Год выпуска</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="year-options"></div></div>
+                    <div class="filter-section"><div class="filter-section-header" data-section="length"><span>📏 Рост лыжи, см</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="length-options"></div></div>
+                    <div class="filter-section"><div class="filter-section-header" data-section="stiffness"><span>💪 Жёсткость, кг</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="stiffness-options"></div></div>
+                    <div class="filter-section"><div class="filter-section-header" data-section="trackType"><span>🏔️ Тип трассы</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="trackType-options"></div></div>
+                    <div class="filter-section"><div class="filter-section-header" data-section="level"><span>🎯 Уровень</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="level-options"></div></div>
+                    <div class="filter-section"><div class="filter-section-header" data-section="style"><span>⛷️ Стиль</span><i class="fas fa-chevron-down"></i></div><div class="filter-options" id="style-options"></div></div>
+                </div>
+                <div class="filter-buttons">
+                    <button class="btn-apply" id="applyFiltersBtn">Применить</button>
+                    <button class="btn-reset-filters" id="resetFiltersBtn">Сбросить</button>
+                </div>
             </div>
             <div class="products-area">
                 <div class="products-header"><div class="products-count" id="productsCount">Товаров: 0</div><select class="sort-select" id="sortSelect"><option value="default">По умолчанию</option><option value="price_asc">Цена: по возрастанию</option><option value="price_desc">Цена: по убыванию</option><option value="rating_desc">Рейтинг: по убыванию</option><option value="year_desc">Год: новинки</option></select></div>
@@ -302,38 +516,76 @@
 
 <div id="detailModal" class="detail-modal"><div class="detail-modal-content"><button class="detail-close" id="detailCloseBtn">&times;</button><div id="detailContent" class="detail-content"></div></div></div>
 
-<!-- Модальное окно добавления товара -->
+<div id="compareModal" class="compare-modal"><div class="compare-modal-content"><button class="compare-close" id="compareCloseBtn">&times;</button><div id="compareContent"></div></div></div>
+
 <div id="addProductModal" class="modal"><div class="modal-content"><div class="modal-header"><h2><i class="fas fa-plus-circle"></i> Добавить новый товар</h2><button class="close-modal" id="closeModalBtn">&times;</button></div><form id="addProductForm">
     <div class="form-group"><label>Название товара *</label><input type="text" id="prodName" required><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Укажите полное название модели</span></div>
     <div class="form-row"><div class="form-group"><label>Категория *</label><select id="prodSport"><option value="Лыжи">⛷️ Лыжи</option></select><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Выберите категорию товара</span></div><div class="form-group"><label>Изображение</label><div class="image-upload-area" id="imageUploadArea"><i class="fas fa-cloud-upload-alt" style="font-size: 40px;"></i><p>Нажмите или перетащите</p><input type="file" id="imageFileInput" accept="image/*" style="display: none;"></div><div class="image-preview" id="imagePreview" style="display: none;"><img id="previewImg" src="" alt="Превью"></div><div class="or-divider">— или URL / иконка —</div><div class="image-input-row"><input type="text" id="prodImage" placeholder="URL или fa-icon"><button type="button" id="clearImageBtn" class="remove-spec-btn">✕</button></div><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Поддерживаются: ссылка на фото, иконка FontAwesome или загрузка файла</span></div></div>
     <h3 style="margin: 20px 0 15px; color: var(--accent-color);">📋 Основные характеристики</h3>
     <div class="form-row-3"><div class="form-group"><label>Страна</label><input type="text" id="prodCountry"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Страна-производитель</span></div><div class="form-group"><label>Фирма/Бренд</label><input type="text" id="prodBrand"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Название бренда</span></div><div class="form-group"><label>Модель</label><input type="text" id="prodModel"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Модельный номер</span></div></div>
-    <div class="form-row-3"><div class="form-group"><label>Год выпуска</label><input type="number" id="prodYear"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Год производства</span></div><div class="form-group"><label>Рост лыжи (см)</label><input type="number" id="prodLength"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Длина лыжи в сантиметрах</span></div><div class="form-group"><label>Вес пары (кг)</label><input type="text" id="prodWeight"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Вес комплекта лыж</span></div></div>
+    <div class="form-row-3"><div class="form-group"><label>Год выпуска</label><input type="text" id="prodYear"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Год производства</span></div><div class="form-group"><label>Рост лыжи (см)</label><input type="text" id="prodLength"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Длина лыжи в сантиметрах</span></div><div class="form-group"><label>Вес пары (кг)</label><input type="text" id="prodWeight"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Вес комплекта лыж</span></div></div>
     <div class="form-row-3"><div class="form-group"><label>Диапазон структуры (°)</label><input type="text" id="prodStructRange"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Угол структуры скользяка</span></div><div class="form-group"><label>Диапазон шлифта (°)</label><input type="text" id="prodGrindRange"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Угол заточки кантов</span></div><div class="form-group"><label>Жёсткость (кг)</label><input type="text" id="prodStiffness"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Диапазон жёсткости</span></div></div>
     <div class="form-row-3"><div class="form-group"><label>Стоимость (₽)</label><input type="number" id="prodPrice"><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Цена товара в рублях</span></div><div class="form-group"><label>Уровень</label><select id="prodLevel"><option value="Начинающий">Начинающий</option><option value="Средний">Средний</option><option value="Продвинутый">Продвинутый</option><option value="Эксперт">Эксперт</option><option value="Профессионал">Профессионал</option></select><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Для какого уровня лыжников</span></div><div class="form-group"><label> </label><div></div></div></div>
     <div class="form-row-3"><div class="form-group"><label>Тип трассы</label><select id="prodTrackType"><option value="Универсал">Универсал</option><option value="Подготовленная">Подготовленная</option><option value="Целина">Целина</option><option value="Смешанная">Смешанная</option></select><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Для каких трасс подходят</span></div><div class="form-group"><label>Стиль передвижения</label><select id="prodStyle"><option value="Классика">Классика</option><option value="Конек">Конек</option><option value="Универсал">Универсал</option></select><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Техника катания</span></div><div class="form-group"><label> </label><div></div></div></div>
     <div class="form-group"><label>Общее описание товара</label><textarea id="prodDescription" placeholder="Подробное описание товара..."></textarea><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Расскажите о ключевых особенностях товара</span></div>
+
+    <!-- БЛОК МАГАЗИНОВ -->
+    <div class="form-group">
+        <label><i class="fas fa-shopping-cart"></i> 🛒 Где купить (ссылки на магазины)</label>
+        <div id="shopLinksContainer">
+            <div class="shop-link-item">
+                <select class="shop-name" style="width: 30%;">
+                    <option value="">Выберите магазин</option>
+                    <option value="Ozon">🛒 Ozon</option>
+                    <option value="Wildberries">🛍️ Wildberries</option>
+                    <option value="Яндекс.Маркет">📱 Яндекс.Маркет</option>
+                    <option value="Спортмастер">🏪 Спортмастер</option>
+                    <option value="Кант">⛷️ Кант</option>
+                    <option value="Триал-Спорт">🎿 Триал-Спорт</option>
+                    <option value="Другой">🔗 Другой</option>
+                </select>
+                <input type="url" class="shop-url" placeholder="https://..." style="width: 55%;">
+                <button type="button" class="remove-shop-link" onclick="this.parentElement.remove()">✕</button>
+            </div>
+        </div>
+        <button type="button" id="addShopLinkBtn" class="add-spec-btn">
+            <i class="fas fa-plus"></i> Добавить магазин
+        </button>
+        <span class="tooltip-hint">
+            <i class="fas fa-info-circle"></i> Добавьте ссылки на магазины, где можно купить этот товар
+        </span>
+    </div>
+
     <div class="specs-group"><h4><i class="fas fa-plus-circle"></i> Дополнительные характеристики (Название : Значение)</h4><div id="specsContainer"><div class="specs-item"><input type="text" class="spec-name" placeholder="Название"><input type="text" class="spec-value" placeholder="Значение"><button type="button" class="remove-spec-btn" onclick="this.parentElement.remove()">✕</button></div></div><button type="button" class="add-spec-btn" id="addSpecBtn"><i class="fas fa-plus"></i> Добавить характеристику</button><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Добавьте дополнительные характеристики в формате Название : Значение</span></div>
     <button type="submit" class="submit-btn"><i class="fas fa-save"></i> Добавить товар</button>
 </form></div></div>
 
-<!-- Модальное окно редактирования товара -->
 <div id="editProductModal" class="modal"><div class="modal-content"><div class="modal-header"><h2><i class="fas fa-edit"></i> Редактировать товар</h2><button class="close-modal" id="closeEditModalBtn">&times;</button></div><form id="editProductForm">
     <input type="hidden" id="editProductId">
     <div class="form-group"><label>Название товара *</label><input type="text" id="editProdName" required><span class="tooltip-hint"><i class="fas fa-info-circle"></i> Укажите полное название модели</span></div>
     <div class="form-row"><div class="form-group"><label>Категория *</label><select id="editProdSport"><option value="Лыжи">⛷️ Лыжи</option></select></div><div class="form-group"><label>Изображение</label><div class="image-upload-area" id="editImageUploadArea"><i class="fas fa-cloud-upload-alt" style="font-size: 40px;"></i><p>Нажмите или перетащите новое изображение</p><input type="file" id="editImageFileInput" accept="image/*" style="display: none;"></div><div class="image-preview" id="editImagePreview" style="display: none;"><img id="editPreviewImg" src="" alt="Превью"><button type="button" class="remove-spec-btn" id="clearEditImageBtn" style="margin-top: 5px;">✕</button></div><div class="or-divider">— или URL / иконка —</div><div class="image-input-row"><input type="text" id="editProdImage" placeholder="URL или fa-icon"><button type="button" id="clearEditImageUrlBtn" class="remove-spec-btn">✕</button></div></div></div>
     <h3 style="margin: 20px 0 15px; color: var(--accent-color);">📋 Основные характеристики</h3>
     <div class="form-row-3"><div class="form-group"><label>Страна</label><input type="text" id="editProdCountry"></div><div class="form-group"><label>Фирма/Бренд</label><input type="text" id="editProdBrand"></div><div class="form-group"><label>Модель</label><input type="text" id="editProdModel"></div></div>
-    <div class="form-row-3"><div class="form-group"><label>Год выпуска</label><input type="number" id="editProdYear"></div><div class="form-group"><label>Рост лыжи (см)</label><input type="number" id="editProdLength"></div><div class="form-group"><label>Вес пары (кг)</label><input type="text" id="editProdWeight"></div></div>
+    <div class="form-row-3"><div class="form-group"><label>Год выпуска</label><input type="text" id="editProdYear"></div><div class="form-group"><label>Рост лыжи (см)</label><input type="text" id="editProdLength"></div><div class="form-group"><label>Вес пары (кг)</label><input type="text" id="editProdWeight"></div></div>
     <div class="form-row-3"><div class="form-group"><label>Диапазон структуры (°)</label><input type="text" id="editProdStructRange"></div><div class="form-group"><label>Диапазон шлифта (°)</label><input type="text" id="editProdGrindRange"></div><div class="form-group"><label>Жёсткость (кг)</label><input type="text" id="editProdStiffness"></div></div>
     <div class="form-row-3"><div class="form-group"><label>Стоимость (₽)</label><input type="number" id="editProdPrice"></div><div class="form-group"><label>Уровень</label><select id="editProdLevel"><option value="Начинающий">Начинающий</option><option value="Средний">Средний</option><option value="Продвинутый">Продвинутый</option><option value="Эксперт">Эксперт</option><option value="Профессионал">Профессионал</option></select></div><div class="form-group"><label> </label><div></div></div></div>
     <div class="form-row-3"><div class="form-group"><label>Тип трассы</label><select id="editProdTrackType"><option value="Универсал">Универсал</option><option value="Подготовленная">Подготовленная</option><option value="Целина">Целина</option><option value="Смешанная">Смешанная</option></select></div><div class="form-group"><label>Стиль передвижения</label><select id="editProdStyle"><option value="Классика">Классика</option><option value="Конек">Конек</option><option value="Универсал">Универсал</option></select></div><div class="form-group"><label> </label><div></div></div></div>
     <div class="form-group"><label>Общее описание товара</label><textarea id="editProdDescription"></textarea></div>
+
+    <!-- БЛОК МАГАЗИНОВ ДЛЯ РЕДАКТИРОВАНИЯ -->
+    <div class="form-group">
+        <label><i class="fas fa-shopping-cart"></i> 🛒 Где купить (ссылки на магазины)</label>
+        <div id="editShopLinksContainer"></div>
+        <button type="button" id="editAddShopLinkBtn" class="add-spec-btn">
+            <i class="fas fa-plus"></i> Добавить магазин
+        </button>
+    </div>
+
     <div class="specs-group"><h4><i class="fas fa-plus-circle"></i> Дополнительные характеристики</h4><div id="editSpecsContainer"></div><button type="button" class="add-spec-btn" id="editAddSpecBtn"><i class="fas fa-plus"></i> Добавить характеристику</button></div>
     <button type="submit" class="submit-btn"><i class="fas fa-save"></i> Сохранить изменения</button>
 </form></div></div>
 
-<footer><div class="container"><p>© 2025 Yetifit — интернет-магазин спортивной экипировки</p></div></footer>
+<footer><div class="container"><p>© 2026 Yetifit — подбор спортивной экипировки</p></div></footer>
 
 <script>
     let products = [];
@@ -343,17 +595,110 @@
     let lastLoginDate = null;
     let uploadedImageDataUrl = null;
     let editUploadedImageDataUrl = null;
+    let compareList = [];
+    let compareViewMode = 'all';
     const ADMIN_CREDENTIALS = { login: "admin", password: "12345" };
+    const MAX_COMPARE_ITEMS = 4;
+
+    // Начальные товары с примерами ссылок на магазины
+    const INITIAL_PRODUCTS = [
+        { id: 1, name: "Fischer RCS Skate Plus Medium", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Fischer", model: "RCS Skate Plus Medium", year: "2023-2024", length: "191", weight: "1,09", stiffness: "80", trackType: "подтаявший мокрый снег(каша)", level: "Профессионал", style: "Конек", price: 37000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.skisport.pro/product/lyzhi-fischer-rcs-skate-plus-medium-ifp?ysclid=mpjlccguj2950053213" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 2, name: "Fischer Carbonlite Skate Plus Medium", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Fischer", model: "Carbonlite Skate Plus Medium", year: "2023-2024", length: "191", weight: "1,06", stiffness: "80", trackType: "твёрдый укатанный снег", level: "Профессионал", style: "Конек", price: 62000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.hc5.ru/begovye-lyzhi-fischer-carbonlite-skate-plus-x-stiff-ifp-2023/?sku=313302&utm_source=none&utm_medium=cpc&utm_campaign=702730190&utm_content=premium.3&utm_term=---autotargeting&etext=2202.odTEV8s2BVcR-BciDoLhZPYqbV90Syq9TGwgz0q9EIW9Zhs6c22ezyiXbI2ToegScXpvdWxiZmFwanJkYWRhZA.f129ea6f178b93e5cce46745b4af4e504a8d9228&yclid=11370769466851852287&ybaip=1" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 3, name: "Fischer Speedmax Helium Skate 61K Stiff", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Fischer", model: "Speedmax Helium Skate", year: "2023-2024", length: "191", weight: "0,950", stiffness: "80", trackType: "рыхлый снег(каша)", level: "Профессионал+", style: "Конек", price: 82000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.av-sport.ru/shop/lyzhi-begovye/konkovye/lyzhi-fischer/lyzhi-begovye-fischer-speedmax-3d-skate-61k-stiff-f-seriya-n05322/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 4, name: "Fischer Summit Crown IFP", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Fischer", model: "Summit Crown IFP", year: "2023-2024", length: "207", weight: "1,63", stiffness: "80", trackType: "хорошо подготовленная лыжня", level: "Любитель", style: "Классика", price: 23000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.hc5.ru/begovye-lyzhi-fischer-summit-crown-yellow-ef-ifp-s-krepleniyami-compact-step-in-nv77024/?sku=377220&utm_source=yandex.ru&utm_medium=cpc&utm_campaign=702730190&utm_content=dynamic_places.1&utm_term=---autotargeting&etext=&ybaip=1" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 5, name: "Fischer Active Skate", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Fischer", model: "Active Skate", year: "2024-2025", length: "191", weight: "1,35", stiffness: "80", trackType: "твёрдый укатанный снег", level: "Любитель", style: "Конек", price: 15000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sportmaster.ru/product/34966160299/?utm_source=yandex&utm_medium=cpc&utm_campaign=tran_rf_tovarnaya-kampania_vse-tovary&utm_content=ST:search|S:none|AP:no|PT:premium|P:2|DT:desktop|RI:213|RN:%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0|CI:85580735|GI:5524857810|PI:53988112090|AI:17659629305|KW:---autotargeting&etext=2202.GIH0C9N5a0ya995JQEWE3AynNGH2TA_0HRDlezIl5dV0gHRPjyensYBROIt0oUVdvh1SZLqOkwjbvQgmoVPPaXJsamdza2djYnZmdXdzY3c.1bbe9256d93000a34d566682ba226d19d04941aa&yclid=9263489597781049343&ybaip=1" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 6, name: "Fischer Carbonlite Skate Plus", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Fischer", model: "Carbonlite Skate Plus", year: "2024-2025", length: "191", weight: "1,06", stiffness: "80", trackType: "трассы с разным состоянием снега", level: "Профессионал", style: "Конек", price: 54000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.hc5.ru/begovye-lyzhi-fischer-carbonlite-skate-plus-x-stiff-ifp-2023/?sku=313302&utm_source=none&utm_medium=cpc&utm_campaign=702730190&utm_content=premium.2&utm_term=---autotargeting&etext=2202.szbA6OQTyGwu5NtPep1ScAWnG-29aEUafMsr6Jsnuq5cV2BqMdcko8YygchASs4o73i3_2AFkdprs-Sm3pHYMXVza2Job3B0bW1iZXV2d2I.af802605c8f557fdf2552671add2886146989dc5&yclid=7984301360301998079&ybaip=1" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 7, name: "Fischer Speedmax 80 Skate", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Fischer", model: "Speedmax 80 Skate", year: "2025-2026", length: "191", weight: "1,09", stiffness: "80", trackType: "мелкозернистый снег", level: "Профессионал", style: "Конек", price: 48000 }, shopLinks: [{ name: "Спортмастер", url: "https://mountainpeaks.ru/xc_ski_shop/lyzhi_begovye/begovye_lyzhi_fischer_speedmax_80_skate_plus_115_stiff_n17625/?utm_source=yandex&utm_medium=galery&utm_campaign=webmaster" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 8, name: "Fischer Speedmax 90 Skate", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Fischer", model: "Speedmax 90 Skate", year: "2025-2026", length: "191", weight: "0,95", stiffness: "80", trackType: "жёсткий или мелкозернистый снег", level: "Профессионал", style: "Конек", price: 72000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.uventasport.ru/catalog/begovye_lyzhi/lyzhi/detskie_i_yuniorskie/79627/?oid=108122" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 9, name: "Fischer Speedmax 100 HE", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Fischer", model: "Speedmax 100 HE", year: "2025-2026", length: "191", weight: "0,9", stiffness: "80", trackType: "мелкозернистый снег + каша", level: "Профессионал+", style: "Конек", price: 100000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.uventasport.ru/catalog/begovye_lyzhi/lyzhi/konkovye_lyzhi/79602/?oid=107505" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 10, name: "Fischer Speedmax 100 Classic Plus 902", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Fischer", model: "Speedmax 100 Classic", year: "2025-2026", length: "207", weight: "1,03", stiffness: "80", trackType: "тёплые условия", level: "Профессионал+", style: "Классика", price: 90000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.uventasport.ru/catalog/begovye_lyzhi/lyzhi/klassicheskie_lyzhi/79608/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 11, name: "Fischer Speedmax 100 Classic WET", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Fischer", model: "Speedmax 100 Classic WET", year: "2025-2026", length: "207", weight: "1,03", stiffness: "80", trackType: "мокрый снег(каша)", level: "Профессионал+", style: "Классика", price: 90000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.uventasport.ru/catalog/begovye_lyzhi/lyzhi/detskie_i_yuniorskie/79626/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+
+        // ========== ROSSIGNOL (Франция) ==========
+        { id: 12, name: "Rossignol R Skin Ultra", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Rossignol", model: "R Skin Ultra", year: "2021-2022", length: "201", weight: "1,38", stiffness: "80", trackType: "твёрдый подмёрзший снег", level: "Любитель", style: "Классика", price: 16000 }, shopLinks: [{ name: "Спортмастер", url: "https://trial-sport.ru/goods/3063241.html" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 13, name: "Rossignol Delta Comp R-Skin Stiff", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Rossignol", model: "Delta Comp R-Skin", year: "2021-2022", length: "201", weight: "1,14", stiffness: "80", trackType: "высокая влажность и мокрый снег", level: "Любитель", style: "Классика", price: 19000 }, shopLinks: [{ name: "Спортмастер", url: "https://trial-sport.ru/goods/3063219.html" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 14, name: "Rossignol Delta Comp R-Skin", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Rossignol", model: "Delta Comp R-Skin", year: "2023-2024", length: "201", weight: "1,14", stiffness: "80", trackType: "высокая влажность и переход через 0", level: "Любитель", style: "Классика", price: 18000 }, shopLinks: [{ name: "Спортмастер", url: "https://trial-sport.ru/goods/3063210.html" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 15, name: "Rossignol X-Ium Skating PremiumS3-IFP", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Rossignol", model: "X-Ium Skating Premium", year: "2023-2024", length: "188", weight: "0,940", stiffness: "80", trackType: "высокая влажность и мокрый снег", level: "Профессионал+", style: "Конек", price: 80000 }, shopLinks: [{ name: "Спортмастер", url: "https://fastbox.su/pl-1/product/11512830859?ysclid=mpjmj2nd7b214706164" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 16, name: "Rossignol Speed Skin (LS)", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Rossignol", model: "Speed Skin LS", year: "2023-2024", length: "170", weight: "1,0", stiffness: "45", trackType: "переходная погода", level: "Детские", style: "Классика", price: 8000 }, shopLinks: [{ name: "Спортмастер", url: "https://cdek.shopping/p/28042539/begovye-lyzhi-speed-r-skin-ls-rossignol-mul-tikolor?ysclid=" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 17, name: "Rossignol Delta Comp Skating", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Rossignol", model: "Delta Comp Skating", year: "2023-2024", length: "192", weight: "1,28", stiffness: "80", trackType: "жёсткая трасса", level: "Любитель+", style: "Конек", price: 36000 }, shopLinks: [{ name: "Спортмастер", url: "https://trial-sport.ru/goods/3135837.html" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 18, name: "Rossignol X-Ium Skating WCS Junior-IFP", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Rossignol", model: "X-Ium Skating WCS Junior", year: "2023-2024", length: "173", weight: "1,0", stiffness: "55", trackType: "свежий снег", level: "Юниорские", style: "Конек", price: 16000 }, shopLinks: [{ name: "Спортмастер", url: "https://skkaravan.ru/magazin/product/rhlcq04-yuniorskie-konkovye-begovye-lyzhi-rossignol-x-ium-skating-wcs-jr-platforma-ifp?ysclid=mpjmo2mc5u343639964" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 19, name: "Rossignol Delta Sport Skating", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Rossignol", model: "Delta Sport Skating", year: "2024-2025", length: "192", weight: "1,26", stiffness: "80", trackType: "свежий снег", level: "Любитель", style: "Конек", price: 15000 }, shopLinks: [{ name: "Спортмастер", url: "https://trial-sport.ru/goods/3063713.html" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 20, name: "Rossignol R-Skin PRO", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Rossignol", model: "R-Skin PRO", year: "2024-2025", length: "206", weight: "1,14", stiffness: "80", trackType: "переходная погода", level: "Любитель+", style: "Классика", price: 21000 }, shopLinks: [{ name: "Спортмастер", url: "https://trial-sport.ru/goods/3041534.html" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 21, name: "Rossignol X-Ium Skating Premium+ S2-IFP", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Rossignol", model: "X-Ium Skating Premium+", year: "2024-2025", length: "191", weight: "0,96", stiffness: "80", trackType: "свежий снег", level: "Профессионал", style: "Конек", price: 31000 }, shopLinks: [{ name: "Спортмастер", url: "https://trial-sport.ru/goods/3041544.html" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 22, name: "Rossignol X-Ium Skating WCS-S2-SOFT", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Rossignol", model: "X-Ium Skating WCS-S2-SOFT", year: "2024-2025", length: "192", weight: "1,1", stiffness: "80", trackType: "свежий снег", level: "Профессионал", style: "Конек", price: 28000 }, shopLinks: [{ name: "Спортмастер", url: "https://trial-sport.ru/goods/3063196.html" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+
+        // ========== BRADOS (Россия) ==========
+        { id: 23, name: "Brados Flash 2.0 Skate", sport: "Лыжи", specsBasic: { country: "Россия", brand: "Brados", model: "Flash 2.0 Skate", year: "2023-2024", length: "188", weight: "1,09", stiffness: "80", trackType: "разбитая трасса", level: "Любитель+", style: "Конек", price: 16000 }, shopLinks: [{ name: "Спортмастер", url: "https://skiwax.ru/catalog/lyzhi/konkovye-lyzhi/gonochnye-lyzhi-dlya-konkovogo-khoda-brados-flash-2-0-skate-2024/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 24, name: "Brados Flash 2.0 JR Skate", sport: "Лыжи", specsBasic: { country: "Россия", brand: "Brados", model: "Flash 2.0 JR Skate", year: "2023-2024", length: "173", weight: "0,95", stiffness: "55", trackType: "разбитая трасса", level: "Юниорские", style: "Конек", price: 15000 }, shopLinks: [{ name: "Спортмастер", url: "https://skkaravan.ru/magazin/product/gonochnye-lyzhi-dlya-konkovogo-hoda-brados-flash-2-0-jr-skate?ysclid=mpjng7hvcc246845078" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 25, name: "Brados Word Cup Carbon Skate", sport: "Лыжи", specsBasic: { country: "Россия", brand: "Brados", model: "Word Cup Carbon Skate", year: "2023-2024", length: "188", weight: "1,2", stiffness: "80", trackType: "разбитая трасса", level: "Профессионал", style: "Конек", price: 17000 }, shopLinks: [{ name: "Спортмастер", url: "https://skkaravan.ru/magazin/product/bra-psa23-begovye-lyzhi-dlya-konkovogo-hoda-brados-pro-skate-air-183?ysclid=mpjnh6wf4r957676885" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 26, name: "Brados Pro Skate Air", sport: "Лыжи", specsBasic: { country: "Россия", brand: "Brados", model: "Pro Skate Air", year: "2023-2024", length: "188", weight: "1,3", stiffness: "80", trackType: "жёсткая трасса", level: "Профессионал", style: "Конек", price: 16000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.uventasport.ru/catalog/begovye_lyzhi/lyzhi/konkovye_lyzhi/28189/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 27, name: "Brados Pro + Skate", sport: "Лыжи", specsBasic: { country: "Россия", brand: "Brados", model: "Pro + Skate", year: "2024-2025", length: "188", weight: "1,1", stiffness: "80", trackType: "жёсткая трасса", level: "Профессионал", style: "Конек", price: 23000 }, shopLinks: [{ name: "Спортмастер", url: "https://skiwax.ru/catalog/lyzhi/konkovye-lyzhi/gonochnye-lyzhi-dlya-konkovogo-khoda-brados-pro-skate_1/?ysclid=mpjnkdol5n790216159" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+
+        // ========== TISA (Россия) ==========
+        { id: 28, name: "Tisa Sport Step JR", sport: "Лыжи", specsBasic: { country: "Россия", brand: "Tisa", model: "Sport Step JR", year: "2021-2022", length: "170", weight: "2,0", stiffness: "60", trackType: "жёсткая трасса", level: "Новичок", style: "Классика", price: 3000 }, shopLinks: [{ name: "Спортмастер", url: "https://manaraga.ru/catalog/begolyzhnoe_snaryazhenie_/lyzhi_begovye_/206515/?ysclid=mpjnll48hy301915373" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 29, name: "Tisa Sport Step Blue", sport: "Лыжи", specsBasic: { country: "Россия", brand: "Tisa", model: "Sport Step Blue", year: "2022-2023", length: "207", weight: "1,1", stiffness: "80", trackType: "жёсткая трасса", level: "Новичок", style: "Классика", price: 4500 }, shopLinks: [{ name: "Спортмастер", url: "https://trial-sport.ru/goods/2718974.html" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 30, name: "Tisa Race Cap Skating", sport: "Лыжи", specsBasic: { country: "Россия", brand: "Tisa", model: "Race Cap Skating", year: "2022-2023", length: "192", weight: "1,0", stiffness: "80", trackType: "жёсткая трасса", level: "Любитель", style: "Конек", price: 11000 }, shopLinks: [{ name: "Спортмастер", url: "https://ufosport.ru/catalog/lyzhnaya-ehkipirovka/plastikovye_lyzhi_tisa_race_cap_skating_2021/?ysclid=mpjnnblh6q136734877" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 31, name: "Tisa Onski Rase Skate", sport: "Лыжи", specsBasic: { country: "Россия", brand: "Tisa", model: "Onski Rase Skate", year: "2023-2024", length: "192", weight: "1,15", stiffness: "80", trackType: "жёсткая трасса", level: "Любитель", style: "Конек", price: 8000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sunsport.ru/akcii-i-rasprodazhi/zimnyaya-rasprodazha-15-1096/lyzhi-onski-race-skate-23-24-11505/?ysclid=mpjnok4xhj437626935" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 32, name: "Tisa Elegance Step Women", sport: "Лыжи", specsBasic: { country: "Россия", brand: "Tisa", model: "Elegance Step Women", year: "2024-2025", length: "185", weight: "1,55", stiffness: "55", trackType: "жёсткая трасса", level: "Новичок", style: "Классика", price: 3500 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sunsport.ru/akcii-i-rasprodazhi/zimnyaya-rasprodazha-15-1096/lyzhi-tisa-elegance-women-step-21-22-8967/?ysclid=mpjnpky0yv993448498" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+
+        // ========== MADSHUS (Норвегия) ==========
+        { id: 33, name: "Madshus Redline Skate F2", sport: "Лыжи", specsBasic: { country: "Норвегия", brand: "Madshus", model: "Redline Skate F2", year: "2023-2024", length: "192", weight: "0,9", stiffness: "80", trackType: "мягкая трасса", level: "Профессионал", style: "Конек", price: 45000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sportmaster.ru/product/28343970299/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 34, name: "Madshus Redline Skate F3", sport: "Лыжи", specsBasic: { country: "Норвегия", brand: "Madshus", model: "Redline Skate F3", year: "2023-2024", length: "192", weight: "0,9", stiffness: "80", trackType: "мягкая трасса", level: "Профессионал", style: "Конек", price: 60000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sportmaster.ru/product/28344170299/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 35, name: "Madshus Redline Skate LTD", sport: "Лыжи", specsBasic: { country: "Норвегия", brand: "Madshus", model: "Redline Skate LTD", year: "2023-2024", length: "192", weight: "0,85", stiffness: "80", trackType: "мокрый снег(каша)", level: "Профессионал+", style: "Конек", price: 76000 }, shopLinks: [{ name: "Спортмастер", url: "https://sport-nordic.ru/lyzhi/lyzhi-madshus-redline-skate-ltd-2025/?ysclid=mpjnu6zsnk604739682" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 36, name: "Madshus Redline Skate F2 (MD240660)", sport: "Лыжи", specsBasic: { country: "Норвегия", brand: "Madshus", model: "Redline Skate F2", year: "2024-2025", length: "192", weight: "0,85", stiffness: "80", trackType: "свежий снег", level: "Профессионал+", style: "Конек", price: 70000 }, shopLinks: [{ name: "Спортмастер", url: "https://sport-nordic.ru/lyzhi/lyzhi-madshus-redline-skate-f2-2025/?ysclid=mpjnv0e57b409703859" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 37, name: "Madshus Redline Skate F3 (MD240661)", sport: "Лыжи", specsBasic: { country: "Норвегия", brand: "Madshus", model: "Redline Skate F3", year: "2024-2025", length: "192", weight: "0,85", stiffness: "80", trackType: "свежий снег", level: "Профессионал", style: "Конек", price: 68000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sportmaster.ru/product/28344170299/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 38, name: "Madshus Redline Skate LTD (MD240668)", sport: "Лыжи", specsBasic: { country: "Норвегия", brand: "Madshus", model: "Redline Skate LTD", year: "2024-2025", length: "192", weight: "0,85", stiffness: "80", trackType: "мокрый снег(каша)", level: "Профессионал", style: "Конек", price: 67000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sportmaster.ru/product/28344170299/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 39, name: "Madshus Redline Classic K1 (MD240657)", sport: "Лыжи", specsBasic: { country: "Норвегия", brand: "Madshus", model: "Redline Classic K1", year: "2024-2025", length: "207", weight: "0,86", stiffness: "80", trackType: "холодный мелкий снег", level: "Профессионал", style: "Классика", price: 59000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sportmaster.ru/product/24967330299/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 40, name: "Madshus Redline Classic K2", sport: "Лыжи", specsBasic: { country: "Норвегия", brand: "Madshus", model: "Redline Classic K2", year: "2024-2025", length: "207", weight: "0,86", stiffness: "80", trackType: "жёсткая трасса", level: "Профессионал", style: "Классика", price: 52000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sportmaster.ru/product/24967770299/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 41, name: "Madshus Redline Classic LTD (MD240667)", sport: "Лыжи", specsBasic: { country: "Норвегия", brand: "Madshus", model: "Redline Classic LTD", year: "2024-2025", length: "207", weight: "0,86", stiffness: "80", trackType: "влажный снег", level: "Профессионал", style: "Классика", price: 55000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sportmaster.ru/product/24967770299/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 42, name: "Madshus Redline Skate F2 (2026-2027)", sport: "Лыжи", specsBasic: { country: "Норвегия", brand: "Madshus", model: "Redline Skate F2", year: "2025-2026", length: "192", weight: "0,83", stiffness: "80", trackType: "жёсткая трасса", level: "Профессионал", style: "Конек", price: 52000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sportmaster.ru/product/28343970299/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 43, name: "Madshus Redline Skate F3 (2026-2027)", sport: "Лыжи", specsBasic: { country: "Норвегия", brand: "Madshus", model: "Redline Skate F3", year: "2025-2026", length: "192", weight: "0,83", stiffness: "80", trackType: "мягкая трасса", level: "Профессионал", style: "Конек", price: 59000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sportmaster.ru/product/28344170299/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+
+        // ========== SALOMON (Франция) ==========
+        { id: 44, name: "Salomon S/Lab Carbon Skate Red (SL34)", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Salomon", model: "S/Lab Carbon Skate Red", year: "2023-2024", length: "192", weight: "0,95", stiffness: "80", trackType: "переходная погода", level: "Профессионал", style: "Конек", price: 67000 }, shopLinks: [{ name: "Спортмастер", url: "https://manaraga.ru/catalog/begolyzhnoe_snaryazhenie_/lyzhi_begovye_/219936/?ysclid=mpjo56larv407326166" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 45, name: "Salomon S/Lab Skate Blue", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Salomon", model: "S/Lab Skate Blue", year: "2024-2025", length: "192", weight: "0,95", stiffness: "80", trackType: "холодный снег", level: "Профессионал", style: "Конек", price: 65000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.kant.ru/catalog/product/2009885-begovye_lyzhi_salomon_s_lab_skate_cold_blue/?ysclid=mpjo6beajk94182283" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 46, name: "Salomon S/Lab Skate Uni", sport: "Лыжи", specsBasic: { country: "Франция", brand: "Salomon", model: "S/Lab Skate Uni", year: "2024-2025", length: "192", weight: "0,95", stiffness: "80", trackType: "твёрдая трасса", level: "Профессионал", style: "Конек", price: 66000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.kant.ru/catalog/product/2009883-begovye_lyzhi_salomon_s_lab_skate/?ysclid=mpjo76lq1e65952417https://www.kant.ru/catalog/product/2009883-begovye_lyzhi_salomon_s_lab_skate/?ysclid=mpjo76lq1e65952417" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+
+        // ========== ATOMIC (Австрия) ==========
+        { id: 47, name: "Atomic Redster S9 Carbon Skate Cold (med)AM7", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Atomic", model: "Redster S9 Carbon Skate Cold", year: "2023-2024", length: "192", weight: "0,98", stiffness: "80", trackType: "свежий снег", level: "Профессионал", style: "Конек", price: 62000 }, shopLinks: [{ name: "Спортмастер", url: "https://sportseason.ru/store/lyzhi-atomic-redster-s9-carbon-uni-med-ab0021162/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 48, name: "Atomic Redster S9 Gen S", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Atomic", model: "Redster S9 Gen S", year: "2024-2025", length: "192", weight: "1,05", stiffness: "80", trackType: "твёрдая трасса", level: "Профессионал", style: "Конек", price: 55000 }, shopLinks: [{ name: "Спортмастер", url: "https://sportexshop.ru/product/begovye-lyzhi-atomic-redster-s9-gen-s-prolink-shift/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 49, name: "Atomic Redster C9 Carbon Plus", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Atomic", model: "Redster C9 Carbon Plus", year: "2025-2026", length: "207", weight: "1,1", stiffness: "80", trackType: "мокрый снег", level: "Профессионал", style: "Классика", price: 44000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sportmaster.ru/product/29446060299/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 },
+        { id: 50, name: "Atomic Redster C9 Carbon Cold", sport: "Лыжи", specsBasic: { country: "Австрия", brand: "Atomic", model: "Redster C9 Carbon Cold", year: "2025-2026", length: "207", weight: "1,1", stiffness: "80", trackType: "твёрдый укатанный снег", level: "Профессионал", style: "Классика", price: 43000 }, shopLinks: [{ name: "Спортмастер", url: "https://www.sportmaster.ru/product/29446050299/" }], customSpecs: [], comments: [], userRatings: {}, rating: null, ratingCount: 0, ratingSum: 0 }
+    ];
+
+    function initDefaultProducts() {
+        const savedProducts = localStorage.getItem('kant_products');
+        if (!savedProducts) {
+            products = JSON.parse(JSON.stringify(INITIAL_PRODUCTS));
+            nextId = 51;
+            saveData();
+            console.log('Начальные товары загружены в каталог');
+        } else {
+            try {
+                const parsed = JSON.parse(savedProducts);
+                if (parsed && parsed.length > 0) {
+                    products = parsed;
+                    nextId = Math.max(...products.map(p => p.id), 0) + 1;
+                } else {
+                    products = JSON.parse(JSON.stringify(INITIAL_PRODUCTS));
+                    nextId = 51;
+                    saveData();
+                }
+            } catch(e) {
+                console.error('Ошибка загрузки товаров:', e);
+                products = JSON.parse(JSON.stringify(INITIAL_PRODUCTS));
+                nextId = 51;
+                saveData();
+            }
+        }
+    }
 
     function cleanupInvalidFavorites() {
         if (!currentUser || !currentUser.favorites) return;
         const validProductIds = new Set(products.map(p => p.id));
         const originalLength = currentUser.favorites.length;
         currentUser.favorites = currentUser.favorites.filter(id => validProductIds.has(id));
-        if (currentUser.favorites.length !== originalLength) {
-            saveData();
-            console.log(`Очищено ${originalLength - currentUser.favorites.length} несуществующих избранных товаров`);
-        }
+        if (currentUser.favorites.length !== originalLength) saveData();
     }
 
     function cleanupInvalidInventory() {
@@ -361,10 +706,297 @@
         const validProductIds = new Set(products.map(p => p.id));
         const originalLength = currentUser.inventory.length;
         currentUser.inventory = currentUser.inventory.filter(item => validProductIds.has(item.id));
-        if (currentUser.inventory.length !== originalLength) {
-            saveData();
-            console.log(`Очищено ${originalLength - currentUser.inventory.length} несуществующих товаров из инвентаря`);
+        if (currentUser.inventory.length !== originalLength) saveData();
+    }
+
+    function loadCompareList() {
+        const saved = localStorage.getItem('kant_compare');
+        if (saved) {
+            try {
+                compareList = JSON.parse(saved);
+                compareList = compareList.filter(id => products.some(p => p.id === id));
+            } catch(e) { compareList = []; }
         }
+        updateCompareCounter();
+    }
+
+    function saveCompareList() {
+        localStorage.setItem('kant_compare', JSON.stringify(compareList));
+        updateCompareCounter();
+    }
+
+    function updateCompareCounter() {
+        const counter = document.getElementById('compareCountHeader');
+        if (counter) counter.innerText = compareList.length;
+    }
+
+    function toggleCompare(productId) {
+        const idx = compareList.indexOf(productId);
+        if (idx === -1) {
+            if (compareList.length >= MAX_COMPARE_ITEMS) {
+                alert(`Максимум можно сравнить ${MAX_COMPARE_ITEMS} товара(ов)`);
+                return false;
+            }
+            compareList.push(productId);
+        } else {
+            compareList.splice(idx, 1);
+        }
+        saveCompareList();
+        renderCatalog();
+        renderFavorites();
+        renderInventory();
+        return true;
+    }
+
+    function isInCompare(productId) {
+        return compareList.includes(productId);
+    }
+
+    function areAllValuesEqual(values) {
+        if (values.length < 2) return false;
+        const firstValue = values[0];
+        return values.every(v => v === firstValue);
+    }
+
+    function getProductSpecValue(product, specKey) {
+        if (specKey === 'rating') return product.rating ? product.rating.toFixed(1) : '—';
+        if (specKey === 'ratingCount') return product.ratingCount || 0;
+        if (specKey === 'description') return product.description || '—';
+        if (specKey.startsWith('custom_')) {
+            const customName = specKey.substring(7);
+            const customSpec = product.customSpecs?.find(s => s.name === customName);
+            return customSpec ? customSpec.value : '—';
+        }
+        return product.specsBasic?.[specKey] || '—';
+    }
+
+    function formatSpecValue(value, specKey) {
+        if (value === '—' || !value) return '<span class="spec-value-normal">—</span>';
+        if (specKey === 'price') {
+            return `<span class="spec-value-highlight">${Number(value).toLocaleString()} ₽</span>`;
+        }
+        if (specKey === 'rating') {
+            return `<span class="spec-value-highlight">⭐ ${value}</span>`;
+        }
+        if (specKey === 'length') {
+            return `<span class="spec-value-normal">📏 ${value} см</span>`;
+        }
+        if (specKey === 'weight') {
+            return `<span class="spec-value-normal">⚖️ ${value} кг</span>`;
+        }
+        if (specKey === 'stiffness') {
+            return `<span class="spec-value-normal">💪 ${value} кг</span>`;
+        }
+        if (specKey === 'year') {
+            return `<span class="spec-value-normal">📅 ${value}</span>`;
+        }
+        if (specKey === 'structRange') {
+            return `<span class="spec-value-normal">🔧 ${value}°</span>`;
+        }
+        if (specKey === 'grindRange') {
+            return `<span class="spec-value-normal">⚙️ ${value}°</span>`;
+        }
+        return `<span class="spec-value-normal">${escapeHtml(String(value))}</span>`;
+    }
+
+    function getSpecIcon(specKey) {
+        const icons = {
+            'brand': '🏭',
+            'country': '🌍',
+            'model': '📋',
+            'year': '📅',
+            'price': '💰',
+            'length': '📏',
+            'weight': '⚖️',
+            'stiffness': '💪',
+            'structRange': '🔧',
+            'grindRange': '⚙️',
+            'trackType': '🏔️',
+            'level': '🎯',
+            'style': '⛷️',
+            'rating': '⭐',
+            'description': '📝'
+        };
+        return icons[specKey] || '📌';
+    }
+
+    function openCompareModal() {
+        if (compareList.length === 0) {
+            const modal = document.getElementById('compareModal');
+            const content = document.getElementById('compareContent');
+            content.innerHTML = `<div class="compare-empty">
+                <i class="fas fa-chart-line"></i>
+                <h3>Сравнение товаров</h3>
+                <p style="margin-top: 10px;">У вас нет товаров для сравнения</p>
+                <button class="compare-clear-btn" onclick="closeCompareModal()">Закрыть</button>
+            </div>`;
+            modal.classList.add('active');
+            return;
+        }
+
+        const compareProducts = compareList.map(id => products.find(p => p.id === id)).filter(p => p);
+        if (compareProducts.length === 0) return;
+
+        const modal = document.getElementById('compareModal');
+        const content = document.getElementById('compareContent');
+
+        const allSpecs = new Set();
+        compareProducts.forEach(p => {
+            if (p.specsBasic) {
+                Object.keys(p.specsBasic).forEach(k => allSpecs.add(k));
+            }
+            if (p.customSpecs && p.customSpecs.length) {
+                p.customSpecs.forEach(s => allSpecs.add(`custom_${s.name}`));
+            }
+        });
+        allSpecs.add('rating');
+        allSpecs.add('ratingCount');
+        allSpecs.add('description');
+
+        const specOrder = ['brand', 'country', 'model', 'year', 'price', 'length', 'weight', 'stiffness', 'structRange', 'grindRange', 'trackType', 'level', 'style', 'rating', 'description'];
+        const sortedSpecs = Array.from(allSpecs).sort((a,b) => {
+            const idxA = specOrder.indexOf(a);
+            const idxB = specOrder.indexOf(b);
+            if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+            if (idxA !== -1) return -1;
+            if (idxB !== -1) return 1;
+            return a.localeCompare(b);
+        });
+
+        let filteredSpecs = sortedSpecs;
+        if (compareViewMode === 'different') {
+            filteredSpecs = sortedSpecs.filter(specKey => {
+                const values = compareProducts.map(p => getProductSpecValue(p, specKey));
+                return !areAllValuesEqual(values);
+            });
+        }
+
+        let tableHtml = `<div class="compare-header">
+            <h2><i class="fas fa-chart-line"></i> Сравнение товаров (${compareProducts.length}/${MAX_COMPARE_ITEMS})</h2>
+            <button class="compare-clear-btn" id="clearCompareBtn"><i class="fas fa-trash"></i> Очистить все</button>
+        </div>
+        <div class="compare-toolbar">
+            <button id="showAllSpecsBtn" class="${compareViewMode === 'all' ? 'active-view' : ''}"><i class="fas fa-list"></i> Все характеристики</button>
+            <button id="showDifferentSpecsBtn" class="${compareViewMode === 'different' ? 'active-view' : ''}"><i class="fas fa-code-branch"></i> Только различные</button>
+        </div>
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th>📊 Характеристики</th>`;
+
+        compareProducts.forEach(p => {
+            tableHtml += `<th class="compare-product-cell">
+                <div class="compare-product-img">${renderCompareProductImage(p)}</div>
+                <div class="compare-product-title">${escapeHtml(p.name)}</div>
+                <div class="compare-product-price">${(p.specsBasic?.price || 0).toLocaleString()} ₽</div>
+                <button class="compare-remove" data-id="${p.id}"><i class="fas fa-times"></i> Убрать</button>
+            </th>`;
+        });
+        tableHtml += `</tr>
+            </thead>
+            <tbody>`;
+
+        filteredSpecs.forEach(specKey => {
+            let displayName = getSpecIcon(specKey) + ' ' + getSpecDisplayName(specKey);
+
+            tableHtml += `<tr>
+                <th>${displayName}</th>`;
+
+            compareProducts.forEach(p => {
+                let value = getProductSpecValue(p, specKey);
+                if (value === '' || value === null || value === undefined) value = '—';
+
+                if (specKey === 'description' && value !== '—') {
+                    const maxLength = 150;
+                    value = value.length > maxLength ? value.substring(0, maxLength) + '...' : value;
+                    tableHtml += `<td style="word-break:break-word; line-height:1.6;">${escapeHtml(String(value))}</td>`;
+                } else {
+                    tableHtml += `<td>${formatSpecValue(value, specKey)}</td>`;
+                }
+            });
+            tableHtml += `</tr>`;
+        });
+
+        tableHtml += `</tbody>
+        </table>`;
+
+        content.innerHTML = tableHtml;
+        modal.classList.add('active');
+
+        document.getElementById('showAllSpecsBtn')?.addEventListener('click', () => {
+            compareViewMode = 'all';
+            openCompareModal();
+        });
+        document.getElementById('showDifferentSpecsBtn')?.addEventListener('click', () => {
+            compareViewMode = 'different';
+            openCompareModal();
+        });
+
+        document.querySelectorAll('.compare-remove').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.dataset.id);
+                const idx = compareList.indexOf(id);
+                if (idx !== -1) compareList.splice(idx, 1);
+                saveCompareList();
+                renderCatalog();
+                renderFavorites();
+                renderInventory();
+                if (compareList.length === 0) {
+                    openCompareModal();
+                } else {
+                    openCompareModal();
+                }
+            });
+        });
+        const clearBtn = document.getElementById('clearCompareBtn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                compareList = [];
+                saveCompareList();
+                renderCatalog();
+                renderFavorites();
+                renderInventory();
+                openCompareModal();
+            });
+        }
+    }
+
+    function getSpecDisplayName(specKey) {
+        const names = {
+            'price': 'Цена, ₽',
+            'brand': 'Бренд',
+            'country': 'Страна',
+            'model': 'Модель',
+            'year': 'Год выпуска',
+            'length': 'Длина, см',
+            'weight': 'Вес, кг',
+            'stiffness': 'Жёсткость, кг',
+            'structRange': 'Структура, °',
+            'grindRange': 'Шлифт, °',
+            'trackType': 'Тип трассы',
+            'level': 'Уровень',
+            'style': 'Стиль',
+            'rating': 'Рейтинг',
+            'ratingCount': 'Кол-во оценок',
+            'description': 'Описание'
+        };
+        if (specKey.startsWith('custom_')) {
+            return specKey.substring(7);
+        }
+        return names[specKey] || specKey;
+    }
+
+    function closeCompareModal() {
+        document.getElementById('compareModal')?.classList.remove('active');
+    }
+
+    function renderCompareProductImage(p) {
+        const imgUrl = p.specsBasic?.imageUrl || p.imageUrl;
+        const iconName = p.specsBasic?.icon || p.icon;
+        if (imgUrl?.startsWith('data:')) return `<img src="${imgUrl}" alt="${p.name}">`;
+        if (imgUrl?.startsWith('http')) return `<img src="${imgUrl}" alt="${p.name}" onerror="this.parentElement.innerHTML='<i class=\'fas fa-image\' style=\'font-size:40px;color:var(--accent-color);\'></i>'">`;
+        return `<i class="fas ${iconName||'fa-skiing'}" style="font-size:40px;color:var(--accent-color);"></i>`;
     }
 
     function calculateProductRating(product) {
@@ -388,21 +1020,14 @@
     function addUserRating(productId, ratingValue) {
         const product = products.find(p => p.id === productId);
         if (!product || !currentUser) return false;
-
         if (!product.userRatings) product.userRatings = {};
         if (!product.ratingCount) { product.ratingCount = 0; product.ratingSum = 0; }
-
         const oldRating = product.userRatings[currentUser.username];
-        if (oldRating) {
-            product.ratingSum -= oldRating;
-        } else {
-            product.ratingCount++;
-        }
-
+        if (oldRating) product.ratingSum -= oldRating;
+        else product.ratingCount++;
         product.userRatings[currentUser.username] = ratingValue;
         product.ratingSum += ratingValue;
         updateProductRating(product);
-
         saveData();
         fullRefreshUI();
         return true;
@@ -411,14 +1036,8 @@
     function addComment(productId, text) {
         const product = products.find(p => p.id === productId);
         if (!product || !currentUser || !text.trim()) return false;
-
         if (!product.comments) product.comments = [];
-        product.comments.unshift({
-            author: currentUser.username,
-            text: text.trim(),
-            date: new Date().toLocaleString()
-        });
-
+        product.comments.unshift({ author: currentUser.username, text: text.trim(), date: new Date().toLocaleString() });
         saveData();
         fullRefreshUI();
         return true;
@@ -460,6 +1079,7 @@
         else if (sort === "year_desc") filtered.sort((a,b) => (b.specsBasic?.year || 0) - (a.specsBasic?.year || 0));
         return filtered;
     }
+
     function renderCatalog() {
         const filtered = filterProducts();
         const container = document.getElementById('catalogGrid');
@@ -470,13 +1090,26 @@
             const price = p.specsBasic?.price || 0;
             const inInventory = isInInventory(p.id);
             const inFavorites = isFavorite(p.id);
+            const inCompare = isInCompare(p.id);
             const ratingDisplay = p.rating ? p.rating.toFixed(1) : '?';
             const ratingStars = p.rating ? '★'.repeat(Math.floor(p.rating)) + (p.rating % 1 >= 0.5 ? '½' : '') : '★'.repeat(0);
-            return `<div class="product-card" data-id="${p.id}"><div class="product-badge">${ratingDisplay}</div><div class="product-img">${renderProductImage(p)}</div><div class="product-info"><div class="product-title">${escapeHtml(p.name)}</div><div class="product-category">${p.sport}</div><div class="product-price">${price.toLocaleString()} ₽</div><div class="product-rating">${ratingStars}</div><div class="product-description">${escapeHtml((p.description||'Описание отсутствует').substring(0,36))}${(p.description||'').length>36?'...':''}</div><div class="card-buttons"><button class="btn-inv ${inInventory?'in-inventory':''}" data-id="${p.id}"><i class="fas ${inInventory?'fa-check':'fa-box'}"></i> ${inInventory?'В инвентаре':'В инвентарь'}</button><button class="btn-fav ${inFavorites?'active':''}" data-id="${p.id}"><i class="fas fa-heart"></i></button></div></div></div>`;
+            // Блок с иконками магазинов
+            const shopsHtml = p.shopLinks && p.shopLinks.length > 0 ? `
+                <div class="shops-icons">
+                    ${p.shopLinks.slice(0, 3).map(shop => `
+                        <a href="${shop.url}" target="_blank" class="shop-icon" title="${shop.name}" onclick="event.stopPropagation()">
+                            <i class="fas fa-store"></i>
+                        </a>
+                    `).join('')}
+                    ${p.shopLinks.length > 3 ? `<span class="more-shops">+${p.shopLinks.length-3}</span>` : ''}
+                </div>
+            ` : '';
+            return `<div class="product-card" data-id="${p.id}"><div class="product-badge">${ratingDisplay}</div><div class="product-img">${renderProductImage(p)}</div><div class="product-info"><div class="product-title">${escapeHtml(p.name)}</div><div class="product-category">${p.sport}</div><div class="product-price">${price.toLocaleString()} ₽</div><div class="product-rating">${ratingStars}</div><div class="product-description">${escapeHtml((p.description||'Описание отсутствует').substring(0,36))}${(p.description||'').length>36?'...':''}</div>${shopsHtml}<div class="card-buttons"><button class="btn-inv ${inInventory?'in-inventory':''}" data-id="${p.id}"><i class="fas ${inInventory?'fa-check':'fa-box'}"></i> ${inInventory?'В инвентаре':'В инвентарь'}</button><button class="btn-fav ${inFavorites?'active':''}" data-id="${p.id}"><i class="fas fa-heart"></i></button><button class="btn-compare ${inCompare?'active':''}" data-id="${p.id}"><i class="fas fa-chart-line"></i></button></div></div></div>`;
         }).join('');
         attachEvents();
-        document.querySelectorAll('.product-card').forEach(c=>c.addEventListener('click',(e)=>{if(e.target.closest('.btn-inv')||e.target.closest('.btn-fav')) return; openDetailModal(parseInt(c.dataset.id));}));
+        document.querySelectorAll('.product-card').forEach(c=>c.addEventListener('click',(e)=>{if(e.target.closest('.btn-inv')||e.target.closest('.btn-fav')||e.target.closest('.btn-compare')||e.target.closest('.shop-icon')) return; openDetailModal(parseInt(c.dataset.id));}));
     }
+
     function resetFilters() {
         document.getElementById('priceMin').value = 0;
         document.getElementById('priceMax').value = 100000;
@@ -493,21 +1126,11 @@
     function loadTheme() { const savedTheme = localStorage.getItem('selectedTheme'); const customColor = localStorage.getItem('customTheme'); if (customColor && !savedTheme) applyCustomTheme(customColor); else if (savedTheme && themes[savedTheme]) applyTheme(savedTheme); else applyTheme('light'); }
     function saveData() { localStorage.setItem('kant_products', JSON.stringify(products)); localStorage.setItem('kant_users', JSON.stringify(users)); if (currentUser) { localStorage.setItem('kant_currentUser', JSON.stringify({ username: currentUser.username, isAdmin: currentUser.isAdmin, createdAt: currentUser.createdAt })); localStorage.setItem('kant_lastLogin', lastLoginDate || new Date().toLocaleString()); } else { localStorage.removeItem('kant_currentUser'); localStorage.removeItem('kant_lastLogin'); } }
     function loadData() {
-        const savedProducts = localStorage.getItem('kant_products');
-        if (savedProducts) {
-            try {
-                const parsed = JSON.parse(savedProducts);
-                if (parsed.length) products = parsed;
-                nextId = Math.max(...products.map(p=>p.id),0)+1;
-            } catch(e){}
-        }
+        initDefaultProducts();
         const savedUsers = localStorage.getItem('kant_users');
         if (savedUsers) {
             try { users = JSON.parse(savedUsers);
-                users.forEach(u => {
-                    if (!u.favorites) u.favorites = [];
-                    if (!u.inventory) u.inventory = [];
-                });
+                users.forEach(u => { if (!u.favorites) u.favorites = []; if (!u.inventory) u.inventory = []; });
             } catch(e){}
         }
         const savedUser = localStorage.getItem('kant_currentUser');
@@ -515,18 +1138,11 @@
             try {
                 const userData = JSON.parse(savedUser);
                 const fullUser = users.find(u => u.username === userData.username);
-                if (fullUser) {
-                    currentUser = fullUser;
-                    if (!currentUser.inventory) currentUser.inventory = [];
-                    if (!currentUser.favorites) currentUser.favorites = [];
-                    lastLoginDate = localStorage.getItem('kant_lastLogin') || new Date().toLocaleString();
-                } else {
-                    currentUser = null;
-                }
+                if (fullUser) { currentUser = fullUser; if (!currentUser.inventory) currentUser.inventory = []; if (!currentUser.favorites) currentUser.favorites = []; lastLoginDate = localStorage.getItem('kant_lastLogin') || new Date().toLocaleString(); }
+                else currentUser = null;
             } catch(e) { currentUser = null; }
         }
-        cleanupInvalidFavorites();
-        cleanupInvalidInventory();
+        cleanupInvalidFavorites(); cleanupInvalidInventory(); loadCompareList();
     }
     function getUserInventory() { return currentUser?.inventory || []; }
     function getUserFavorites() { return currentUser?.favorites || []; }
@@ -539,6 +1155,7 @@
         const invCount = currentUser?.inventory?.reduce((s,i)=>s+i.quantity,0) || 0;
         const invSpan = document.getElementById('inventoryCountHeader');
         if (invSpan) invSpan.innerText = invCount;
+        updateCompareCounter();
     }
     function addToInventory(id) {
         if (!currentUser) { alert('Войдите в аккаунт'); return; }
@@ -552,34 +1169,19 @@
         fullRefreshUI();
     }
     function removeFromInventory(id) {
-        if (currentUser) {
-            currentUser.inventory = currentUser.inventory.filter(i=>i.id!==id);
-            saveData();
-            fullRefreshUI();
-        }
+        if (currentUser) { currentUser.inventory = currentUser.inventory.filter(i=>i.id!==id); saveData(); fullRefreshUI(); }
     }
     function toggleFavorite(id) {
         if (!currentUser) { alert('Войдите в аккаунт'); return; }
         if (!currentUser.favorites) currentUser.favorites = [];
         const idx = currentUser.favorites.indexOf(id);
-        if (idx === -1) {
-            currentUser.favorites.push(id);
-        } else {
-            currentUser.favorites.splice(idx, 1);
-        }
-        saveData();
-        fullRefreshUI();
+        if (idx === -1) currentUser.favorites.push(id);
+        else currentUser.favorites.splice(idx, 1);
+        saveData(); fullRefreshUI();
     }
-    function fullRefreshUI() {
-        updateCounters();
-        renderCatalog();
-        renderFavorites();
-        renderInventory();
-        if (currentUser?.isAdmin) renderDashboard();
-        collectFilterOptions();
-    }
-    function renderProductImage(p) { const imgUrl = p.specsBasic?.imageUrl || p.imageUrl; const iconName = p.specsBasic?.icon || p.icon; if (imgUrl?.startsWith('data:')) return `<img src="${imgUrl}" alt="${p.name}">`; if (imgUrl?.startsWith('http')) return `<img src="${imgUrl}" alt="${p.name}" onerror="this.parentElement.innerHTML='<i class=\'fas fa-image\' style=\'font-size:65px;color:var(--accent-color);\'></i>'">`; return `<i class="fas ${iconName||'fa-box'}" style="font-size:65px;color:var(--accent-color);"></i>`; }
-    function renderProductImageLarge(p) { const imgUrl = p.specsBasic?.imageUrl || p.imageUrl; const iconName = p.specsBasic?.icon || p.icon; if (imgUrl?.startsWith('data:')) return `<img src="${imgUrl}" alt="${p.name}">`; if (imgUrl?.startsWith('http')) return `<img src="${imgUrl}" alt="${p.name}" onerror="this.parentElement.innerHTML='<i class=\'fas fa-image\' style=\'font-size:100px;color:var(--accent-color);\'></i>'">`; return `<i class="fas ${iconName||'fa-box'}" style="font-size:100px;color:var(--accent-color);"></i>`; }
+    function fullRefreshUI() { updateCounters(); renderCatalog(); renderFavorites(); renderInventory(); if (currentUser?.isAdmin) renderDashboard(); collectFilterOptions(); }
+    function renderProductImage(p) { const imgUrl = p.specsBasic?.imageUrl || p.imageUrl; const iconName = p.specsBasic?.icon || p.icon; if (imgUrl?.startsWith('data:')) return `<img src="${imgUrl}" alt="${p.name}">`; if (imgUrl?.startsWith('http')) return `<img src="${imgUrl}" alt="${p.name}" onerror="this.parentElement.innerHTML='<i class=\'fas fa-image\' style=\'font-size:65px;color:var(--accent-color);\'></i>'">`; return `<i class="fas ${iconName||'fa-skiing'}" style="font-size:65px;color:var(--accent-color);"></i>`; }
+    function renderProductImageLarge(p) { const imgUrl = p.specsBasic?.imageUrl || p.imageUrl; const iconName = p.specsBasic?.icon || p.icon; if (imgUrl?.startsWith('data:')) return `<img src="${imgUrl}" alt="${p.name}">`; if (imgUrl?.startsWith('http')) return `<img src="${imgUrl}" alt="${p.name}" onerror="this.parentElement.innerHTML='<i class=\'fas fa-image\' style=\'font-size:100px;color:var(--accent-color);\'></i>'">`; return `<i class="fas ${iconName||'fa-skiing'}" style="font-size:100px;color:var(--accent-color);"></i>`; }
 
     function openDetailModal(id) {
         const p = products.find(p=>p.id===id);
@@ -594,13 +1196,28 @@
         const ratingDisplay = p.rating ? p.rating.toFixed(1) : 'Нет оценок';
         const ratingStars = p.rating ? '★'.repeat(Math.floor(p.rating)) + (p.rating % 1 >= 0.5 ? '½' : '') : '☆☆☆☆☆';
         const userRating = getUserRatingForProduct(p);
+
+        // Блок с магазинами для детального окна
+        const shopsHtml = p.shopLinks && p.shopLinks.length > 0 ? `
+            <div class="detail-shops">
+                <h3><i class="fas fa-shopping-cart"></i> Где купить:</h3>
+                <div class="shops-list">
+                    ${p.shopLinks.map(shop => `
+                        <a href="${shop.url}" target="_blank" class="shop-link" rel="noopener noreferrer" onclick="event.stopPropagation()">
+                            <i class="fas fa-external-link-alt"></i> ${shop.name}
+                        </a>
+                    `).join('')}
+                </div>
+            </div>
+        ` : '';
+
         let specsHtml = '';
         if (basic.country || basic.brand || basic.model) { specsHtml = `<div class="detail-specs-grid">${basic.country ? `<div class="detail-spec-item"><span class="detail-spec-label">Страна:</span><span class="detail-spec-value">${escapeHtml(basic.country)}</span></div>` : ''}${basic.brand ? `<div class="detail-spec-item"><span class="detail-spec-label">Фирма:</span><span class="detail-spec-value">${escapeHtml(basic.brand)}</span></div>` : ''}${basic.model ? `<div class="detail-spec-item"><span class="detail-spec-label">Модель:</span><span class="detail-spec-value">${escapeHtml(basic.model)}</span></div>` : ''}${basic.year ? `<div class="detail-spec-item"><span class="detail-spec-label">Год выпуска:</span><span class="detail-spec-value">${escapeHtml(basic.year)}</span></div>` : ''}${basic.length ? `<div class="detail-spec-item"><span class="detail-spec-label">Рост лыжи:</span><span class="detail-spec-value">${escapeHtml(basic.length)} см</span></div>` : ''}${basic.weight ? `<div class="detail-spec-item"><span class="detail-spec-label">Вес пары:</span><span class="detail-spec-value">${escapeHtml(basic.weight)} кг</span></div>` : ''}${basic.structRange ? `<div class="detail-spec-item"><span class="detail-spec-label">Структура:</span><span class="detail-spec-value">${escapeHtml(basic.structRange)}°</span></div>` : ''}${basic.grindRange ? `<div class="detail-spec-item"><span class="detail-spec-label">Шлифт:</span><span class="detail-spec-value">${escapeHtml(basic.grindRange)}°</span></div>` : ''}${basic.stiffness ? `<div class="detail-spec-item"><span class="detail-spec-label">Жёсткость:</span><span class="detail-spec-value">${escapeHtml(basic.stiffness)} кг</span></div>` : ''}${basic.trackType ? `<div class="detail-spec-item"><span class="detail-spec-label">Тип трассы:</span><span class="detail-spec-value">${escapeHtml(basic.trackType)}</span></div>` : ''}${basic.level ? `<div class="detail-spec-item"><span class="detail-spec-label">Уровень:</span><span class="detail-spec-value">${escapeHtml(basic.level)}</span></div>` : ''}${basic.style ? `<div class="detail-spec-item"><span class="detail-spec-label">Стиль:</span><span class="detail-spec-value">${escapeHtml(basic.style)}</span></div>` : ''}${basic.price ? `<div class="detail-spec-item"><span class="detail-spec-label">Стоимость:</span><span class="detail-spec-value">${Number(basic.price).toLocaleString()} ₽</span></div>` : ''}</div>`; }
         let customSpecsHtml = ''; if (p.customSpecs && p.customSpecs.length) { customSpecsHtml = `<div class="detail-custom-specs"><h3><i class="fas fa-list"></i> Дополнительные характеристики</h3><ul>${p.customSpecs.map(s => `<li><strong>${escapeHtml(s.name)}:</strong> ${escapeHtml(s.value)}</li>`).join('')}</ul></div>`; }
         let commentsHtml = ''; if (p.comments && p.comments.length) { commentsHtml = `<div class="comment-list">${p.comments.map(c => `<div class="comment-item"><div class="comment-header"><span class="comment-author">${escapeHtml(c.author)}</span><span class="comment-date">${escapeHtml(c.date)}</span></div><div class="comment-text">${escapeHtml(c.text)}</div></div>`).join('')}</div>`; } else { commentsHtml = '<div class="comment-list"><div style="padding: 15px; text-align: center; color: var(--text-secondary);">Пока нет комментариев. Будьте первым!</div></div>'; }
         let rateStarsHtml = ''; for (let i = 1; i <= 5; i++) { rateStarsHtml += `<span class="rate-star" data-rate="${i}">★</span>`; }
         let userRatingMessage = currentUser ? (userRating ? `Вы оценили этот товар на ${userRating} ★` : 'Оцените этот товар:') : 'Войдите, чтобы оценить товар';
-        content.innerHTML = `<div class="detail-image">${renderProductImageLarge(p)}</div><div><span class="detail-category">${p.sport}</span><div class="detail-title">${escapeHtml(p.name)}</div><div class="detail-price">${(basic.price || 0).toLocaleString()} ₽</div><div class="detail-rating-display"><div class="detail-rating-stars">${ratingStars}</div><div class="detail-rating-number">${ratingDisplay} (${p.ratingCount || 0} оценок)</div></div>${specsHtml}${customSpecsHtml}<div class="detail-description-wrapper"><div class="detail-description-text collapsed" id="detailDescText"><strong>Описание:</strong><br><span style="word-wrap:break-word; white-space:normal;">${escapeHtml(desc)}</span></div>${isLong ? `<button class="read-more-btn" id="readMoreBtn"><i class="fas fa-chevron-down"></i> Читать далее</button>` : ''}</div><div class="rating-section"><h3><i class="fas fa-star"></i> Оценка товара</h3><div class="rate-stars" id="rateStarsContainer">${rateStarsHtml}</div><div class="rate-message">${userRatingMessage}</div></div><div class="comments-section"><h3><i class="fas fa-comments"></i> Отзывы покупателей</h3>${commentsHtml}<div class="add-comment">${currentUser ? `<textarea id="newCommentText" rows="3" placeholder="Поделитесь своим мнением о товаре..."></textarea><button id="submitCommentBtn">Отправить отзыв</button>` : `<div class="login-to-comment"><i class="fas fa-sign-in-alt"></i> Войдите в аккаунт, чтобы оставить отзыв</div>`}</div></div><div class="detail-buttons"><button class="detail-btn detail-btn-cart" data-id="${p.id}"><i class="fas ${inInv?'fa-check':'fa-box'}"></i> ${inInv?'Уже в инвентаре':'В инвентарь'}</button><button class="detail-btn detail-btn-fav ${inFav?'active':''}" data-id="${p.id}"><i class="fas fa-heart"></i> ${inFav?'В избранном':'В избранное'}</button></div></div>`;
+        content.innerHTML = `<div class="detail-image">${renderProductImageLarge(p)}</div><div><span class="detail-category">${p.sport}</span><div class="detail-title">${escapeHtml(p.name)}</div><div class="detail-price">${(basic.price || 0).toLocaleString()} ₽</div><div class="detail-rating-display"><div class="detail-rating-stars">${ratingStars}</div><div class="detail-rating-number">${ratingDisplay} (${p.ratingCount || 0} оценок)</div></div>${specsHtml}${customSpecsHtml}${shopsHtml}<div class="detail-description-wrapper"><div class="detail-description-text collapsed" id="detailDescText"><strong>Описание:</strong><br><span style="word-wrap:break-word; white-space:normal;">${escapeHtml(desc)}</span></div>${isLong ? `<button class="read-more-btn" id="readMoreBtn"><i class="fas fa-chevron-down"></i> Читать далее</button>` : ''}</div><div class="rating-section"><h3><i class="fas fa-star"></i> Оценка товара</h3><div class="rate-stars" id="rateStarsContainer">${rateStarsHtml}</div><div class="rate-message">${userRatingMessage}</div></div><div class="comments-section"><h3><i class="fas fa-comments"></i> Отзывы покупателей</h3>${commentsHtml}<div class="add-comment">${currentUser ? `<textarea id="newCommentText" rows="3" placeholder="Поделитесь своим мнением о товаре..."></textarea><button id="submitCommentBtn">Отправить отзыв</button>` : `<div class="login-to-comment"><i class="fas fa-sign-in-alt"></i> Войдите в аккаунт, чтобы оставить отзыв</div>`}</div></div><div class="detail-buttons"><button class="detail-btn detail-btn-cart" data-id="${p.id}"><i class="fas ${inInv?'fa-check':'fa-box'}"></i> ${inInv?'Уже в инвентаре':'В инвентарь'}</button><button class="detail-btn detail-btn-fav ${inFav?'active':''}" data-id="${p.id}"><i class="fas fa-heart"></i> ${inFav?'В избранном':'В избранное'}</button></div></div>`;
         modal.classList.add('active');
         if (isLong) { const btn = document.getElementById('readMoreBtn'); const descDiv = document.getElementById('detailDescText'); let expanded = false; btn.onclick = () => { expanded = !expanded; if (expanded) { descDiv.classList.remove('collapsed'); descDiv.classList.add('expanded'); btn.innerHTML = '<i class="fas fa-chevron-up"></i> Свернуть'; } else { descDiv.classList.remove('expanded'); descDiv.classList.add('collapsed'); btn.innerHTML = '<i class="fas fa-chevron-down"></i> Читать далее'; } }; }
         const rateStars = document.querySelectorAll('#rateStarsContainer .rate-star');
@@ -616,24 +1233,449 @@
     function setupImageUpload() { const area = document.getElementById('imageUploadArea'), file = document.getElementById('imageFileInput'), inp = document.getElementById('prodImage'), preview = document.getElementById('imagePreview'), previewImg = document.getElementById('previewImg'), clear = document.getElementById('clearImageBtn'); area.addEventListener('click',()=>file.click()); area.addEventListener('dragover',e=>{e.preventDefault();area.classList.add('dragover');}); area.addEventListener('dragleave',()=>area.classList.remove('dragover')); area.addEventListener('drop',e=>{e.preventDefault();area.classList.remove('dragover');if(e.dataTransfer.files[0]?.type.startsWith('image/')) process(e.dataTransfer.files[0]);}); file.addEventListener('change',e=>{if(e.target.files?.[0]) process(e.target.files[0]);}); function process(f){const r=new FileReader();r.onload=ev=>{uploadedImageDataUrl=ev.target.result;previewImg.src=uploadedImageDataUrl;preview.style.display='flex';area.style.display='none';inp.value='';};r.readAsDataURL(f);} clear.addEventListener('click',()=>{uploadedImageDataUrl=null;preview.style.display='none';area.style.display='block';inp.value='';file.value='';}); }
     function setupEditImageUpload() { const area = document.getElementById('editImageUploadArea'), file = document.getElementById('editImageFileInput'), inp = document.getElementById('editProdImage'), preview = document.getElementById('editImagePreview'), previewImg = document.getElementById('editPreviewImg'), clear = document.getElementById('clearEditImageBtn'), clearUrl = document.getElementById('clearEditImageUrlBtn'); if (!area) return; area.addEventListener('click',()=>file.click()); area.addEventListener('dragover',e=>{e.preventDefault();area.classList.add('dragover');}); area.addEventListener('dragleave',()=>area.classList.remove('dragover')); area.addEventListener('drop',e=>{e.preventDefault();area.classList.remove('dragover');if(e.dataTransfer.files[0]?.type.startsWith('image/')) process(e.dataTransfer.files[0]);}); file.addEventListener('change',e=>{if(e.target.files?.[0]) process(e.target.files[0]);}); function process(f){const r=new FileReader();r.onload=ev=>{editUploadedImageDataUrl=ev.target.result;previewImg.src=editUploadedImageDataUrl;preview.style.display='flex';area.style.display='none';inp.value='';};r.readAsDataURL(f);} if (clear) clear.addEventListener('click',()=>{editUploadedImageDataUrl=null;preview.style.display='none';area.style.display='block';inp.value='';file.value='';}); if (clearUrl) clearUrl.addEventListener('click',()=>{editUploadedImageDataUrl=null;preview.style.display='none';area.style.display='block';inp.value='';file.value='';}); }
 
-    function openAddProductModal() { document.getElementById('addProductModal')?.classList.add('active'); document.getElementById('prodName').value=''; document.getElementById('prodCountry').value=''; document.getElementById('prodBrand').value=''; document.getElementById('prodModel').value=''; document.getElementById('prodYear').value=''; document.getElementById('prodLength').value=''; document.getElementById('prodWeight').value=''; document.getElementById('prodStructRange').value=''; document.getElementById('prodGrindRange').value=''; document.getElementById('prodStiffness').value=''; document.getElementById('prodTrackType').value='Универсал'; document.getElementById('prodLevel').value='Средний'; document.getElementById('prodStyle').value='Универсал'; document.getElementById('prodPrice').value=''; document.getElementById('prodImage').value=''; document.getElementById('prodDescription').value=''; document.getElementById('specsContainer').innerHTML=`<div class="specs-item"><input type="text" class="spec-name" placeholder="Название (например: Материал)"><input type="text" class="spec-value" placeholder="Значение (например: Карбон)"><button type="button" class="remove-spec-btn" onclick="this.parentElement.remove()">✕</button></div>`; uploadedImageDataUrl=null; document.getElementById('imagePreview').style.display='none'; document.getElementById('imageUploadArea').style.display='block'; document.getElementById('imageFileInput').value=''; }
+    // Функции для работы с магазинами
+    function setupShopLinks() {
+        const addBtn = document.getElementById('addShopLinkBtn');
+        if (addBtn) {
+            addBtn.addEventListener('click', () => {
+                const container = document.getElementById('shopLinksContainer');
+                const div = document.createElement('div');
+                div.className = 'shop-link-item';
+                div.innerHTML = `
+                    <select class="shop-name" style="width: 30%;">
+                        <option value="">Выберите магазин</option>
+                        <option value="Ozon">🛒 Ozon</option>
+                        <option value="Wildberries">🛍️ Wildberries</option>
+                        <option value="Яндекс.Маркет">📱 Яндекс.Маркет</option>
+                        <option value="Спортмастер">🏪 Спортмастер</option>
+                        <option value="Кант">⛷️ Кант</option>
+                        <option value="Триал-Спорт">🎿 Триал-Спорт</option>
+                        <option value="Другой">🔗 Другой</option>
+                    </select>
+                    <input type="url" class="shop-url" placeholder="https://..." style="width: 55%;">
+                    <button type="button" class="remove-shop-link" onclick="this.parentElement.remove()">✕</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        const editAddBtn = document.getElementById('editAddShopLinkBtn');
+        if (editAddBtn) {
+            editAddBtn.addEventListener('click', () => {
+                const container = document.getElementById('editShopLinksContainer');
+                const div = document.createElement('div');
+                div.className = 'shop-link-item';
+                div.innerHTML = `
+                    <select class="shop-name" style="width: 30%;">
+                        <option value="">Выберите магазин</option>
+                        <option value="Ozon">🛒 Ozon</option>
+                        <option value="Wildberries">🛍️ Wildberries</option>
+                        <option value="Яндекс.Маркет">📱 Яндекс.Маркет</option>
+                        <option value="Спортмастер">🏪 Спортмастер</option>
+                        <option value="Кант">⛷️ Кант</option>
+                        <option value="Триал-Спорт">🎿 Триал-Спорт</option>
+                        <option value="Другой">🔗 Другой</option>
+                    </select>
+                    <input type="url" class="shop-url" placeholder="https://..." style="width: 55%;">
+                    <button type="button" class="remove-shop-link" onclick="this.parentElement.remove()">✕</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+    }
+
+    function getShopLinksFromForm(containerId) {
+        const shopLinks = [];
+        const container = document.getElementById(containerId);
+        if (!container) return shopLinks;
+        const items = container.querySelectorAll('.shop-link-item');
+        items.forEach(item => {
+            const shopName = item.querySelector('.shop-name')?.value;
+            const shopUrl = item.querySelector('.shop-url')?.value;
+            if (shopName && shopUrl && shopUrl.trim() !== '') {
+                shopLinks.push({ name: shopName, url: shopUrl });
+            }
+        });
+        return shopLinks;
+    }
+
+    function populateEditShopLinks(shopLinks) {
+        const container = document.getElementById('editShopLinksContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        if (shopLinks && shopLinks.length > 0) {
+            shopLinks.forEach(link => {
+                const div = document.createElement('div');
+                div.className = 'shop-link-item';
+                div.innerHTML = `
+                    <select class="shop-name" style="width: 30%;">
+                        <option value="">Выберите магазин</option>
+                        <option value="Ozon" ${link.name === 'Ozon' ? 'selected' : ''}>🛒 Ozon</option>
+                        <option value="Wildberries" ${link.name === 'Wildberries' ? 'selected' : ''}>🛍️ Wildberries</option>
+                        <option value="Яндекс.Маркет" ${link.name === 'Яндекс.Маркет' ? 'selected' : ''}>📱 Яндекс.Маркет</option>
+                        <option value="Спортмастер" ${link.name === 'Спортмастер' ? 'selected' : ''}>🏪 Спортмастер</option>
+                        <option value="Кант" ${link.name === 'Кант' ? 'selected' : ''}>⛷️ Кант</option>
+                        <option value="Триал-Спорт" ${link.name === 'Триал-Спорт' ? 'selected' : ''}>🎿 Триал-Спорт</option>
+                        <option value="Другой" ${link.name === 'Другой' ? 'selected' : ''}>🔗 Другой</option>
+                    </select>
+                    <input type="url" class="shop-url" placeholder="https://..." value="${escapeHtml(link.url)}" style="width: 55%;">
+                    <button type="button" class="remove-shop-link" onclick="this.parentElement.remove()">✕</button>
+                `;
+                container.appendChild(div);
+            });
+        } else {
+            const div = document.createElement('div');
+            div.className = 'shop-link-item';
+            div.innerHTML = `
+                <select class="shop-name" style="width: 30%;">
+                    <option value="">Выберите магазин</option>
+                    <option value="Ozon">🛒 Ozon</option>
+                    <option value="Wildberries">🛍️ Wildberries</option>
+                    <option value="Яндекс.Маркет">📱 Яндекс.Маркет</option>
+                    <option value="Спортмастер">🏪 Спортмастер</option>
+                    <option value="Кант">⛷️ Кант</option>
+                    <option value="Триал-Спорт">🎿 Триал-Спорт</option>
+                    <option value="Другой">🔗 Другой</option>
+                </select>
+                <input type="url" class="shop-url" placeholder="https://..." style="width: 55%;">
+                <button type="button" class="remove-shop-link" onclick="this.parentElement.remove()">✕</button>
+            `;
+            container.appendChild(div);
+        }
+    }
+
+    function openAddProductModal() {
+        document.getElementById('addProductModal')?.classList.add('active');
+        document.getElementById('prodName').value='';
+        document.getElementById('prodCountry').value='';
+        document.getElementById('prodBrand').value='';
+        document.getElementById('prodModel').value='';
+        document.getElementById('prodYear').value='';
+        document.getElementById('prodLength').value='';
+        document.getElementById('prodWeight').value='';
+        document.getElementById('prodStructRange').value='';
+        document.getElementById('prodGrindRange').value='';
+        document.getElementById('prodStiffness').value='';
+        document.getElementById('prodTrackType').value='Универсал';
+        document.getElementById('prodLevel').value='Средний';
+        document.getElementById('prodStyle').value='Универсал';
+        document.getElementById('prodPrice').value='';
+        document.getElementById('prodImage').value='';
+        document.getElementById('prodDescription').value='';
+        document.getElementById('specsContainer').innerHTML=`<div class="specs-item"><input type="text" class="spec-name" placeholder="Название (например: Материал)"><input type="text" class="spec-value" placeholder="Значение (например: Карбон)"><button type="button" class="remove-spec-btn" onclick="this.parentElement.remove()">✕</button></div>`;
+        // Очищаем магазины
+        const shopContainer = document.getElementById('shopLinksContainer');
+        if (shopContainer) {
+            shopContainer.innerHTML = `<div class="shop-link-item">
+                <select class="shop-name" style="width: 30%;">
+                    <option value="">Выберите магазин</option>
+                    <option value="Ozon">🛒 Ozon</option>
+                    <option value="Wildberries">🛍️ Wildberries</option>
+                    <option value="Яндекс.Маркет">📱 Яндекс.Маркет</option>
+                    <option value="Спортмастер">🏪 Спортмастер</option>
+                    <option value="Кант">⛷️ Кант</option>
+                    <option value="Триал-Спорт">🎿 Триал-Спорт</option>
+                    <option value="Другой">🔗 Другой</option>
+                </select>
+                <input type="url" class="shop-url" placeholder="https://..." style="width: 55%;">
+                <button type="button" class="remove-shop-link" onclick="this.parentElement.remove()">✕</button>
+            </div>`;
+        }
+        uploadedImageDataUrl=null;
+        document.getElementById('imagePreview').style.display='none';
+        document.getElementById('imageUploadArea').style.display='block';
+        document.getElementById('imageFileInput').value='';
+    }
     function closeAddProductModal() { document.getElementById('addProductModal')?.classList.remove('active'); }
-    function openEditProductModal(productId) { const product = products.find(p => p.id === productId); if (!product) return; const basic = product.specsBasic || {}; document.getElementById('editProductId').value = productId; document.getElementById('editProdName').value = product.name; document.getElementById('editProdCountry').value = basic.country || ''; document.getElementById('editProdBrand').value = basic.brand || ''; document.getElementById('editProdModel').value = basic.model || ''; document.getElementById('editProdYear').value = basic.year || ''; document.getElementById('editProdLength').value = basic.length || ''; document.getElementById('editProdWeight').value = basic.weight || ''; document.getElementById('editProdStructRange').value = basic.structRange || ''; document.getElementById('editProdGrindRange').value = basic.grindRange || ''; document.getElementById('editProdStiffness').value = basic.stiffness || ''; document.getElementById('editProdTrackType').value = basic.trackType || 'Универсал'; document.getElementById('editProdLevel').value = basic.level || 'Средний'; document.getElementById('editProdStyle').value = basic.style || 'Универсал'; document.getElementById('editProdPrice').value = basic.price || ''; document.getElementById('editProdDescription').value = product.description || ''; document.getElementById('editProdImage').value = basic.icon && !basic.icon.startsWith('http') && basic.icon !== basic.imageUrl ? basic.icon : ''; const editSpecsContainer = document.getElementById('editSpecsContainer'); if (editSpecsContainer) { editSpecsContainer.innerHTML = ''; if (product.customSpecs && product.customSpecs.length) { product.customSpecs.forEach(spec => { const div = document.createElement('div'); div.className = 'specs-item'; div.innerHTML = `<input type="text" class="spec-name" value="${escapeHtml(spec.name)}"><input type="text" class="spec-value" value="${escapeHtml(spec.value)}"><button type="button" class="remove-spec-btn" onclick="this.parentElement.remove()">✕</button>`; editSpecsContainer.appendChild(div); }); } else { const div = document.createElement('div'); div.className = 'specs-item'; div.innerHTML = `<input type="text" class="spec-name" placeholder="Название"><input type="text" class="spec-value" placeholder="Значение"><button type="button" class="remove-spec-btn" onclick="this.parentElement.remove()">✕</button>`; editSpecsContainer.appendChild(div); } } editUploadedImageDataUrl = null; const preview = document.getElementById('editImagePreview'); const area = document.getElementById('editImageUploadArea'); if (preview) preview.style.display = 'none'; if (area) area.style.display = 'block'; document.getElementById('editImageFileInput').value = ''; document.getElementById('addProductModal')?.classList.remove('active'); document.getElementById('editProductModal')?.classList.add('active'); }
+
+    function openEditProductModal(productId) {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+        const basic = product.specsBasic || {};
+        document.getElementById('editProductId').value = productId;
+        document.getElementById('editProdName').value = product.name;
+        document.getElementById('editProdCountry').value = basic.country || '';
+        document.getElementById('editProdBrand').value = basic.brand || '';
+        document.getElementById('editProdModel').value = basic.model || '';
+        document.getElementById('editProdYear').value = basic.year || '';
+        document.getElementById('editProdLength').value = basic.length || '';
+        document.getElementById('editProdWeight').value = basic.weight || '';
+        document.getElementById('editProdStructRange').value = basic.structRange || '';
+        document.getElementById('editProdGrindRange').value = basic.grindRange || '';
+        document.getElementById('editProdStiffness').value = basic.stiffness || '';
+        document.getElementById('editProdTrackType').value = basic.trackType || 'Универсал';
+        document.getElementById('editProdLevel').value = basic.level || 'Средний';
+        document.getElementById('editProdStyle').value = basic.style || 'Универсал';
+        document.getElementById('editProdPrice').value = basic.price || '';
+        document.getElementById('editProdDescription').value = product.description || '';
+        document.getElementById('editProdImage').value = basic.icon && !basic.icon.startsWith('http') && basic.icon !== basic.imageUrl ? basic.icon : '';
+
+        // Заполняем магазины
+        populateEditShopLinks(product.shopLinks || []);
+
+        const editSpecsContainer = document.getElementById('editSpecsContainer');
+        if (editSpecsContainer) {
+            editSpecsContainer.innerHTML = '';
+            if (product.customSpecs && product.customSpecs.length) {
+                product.customSpecs.forEach(spec => {
+                    const div = document.createElement('div');
+                    div.className = 'specs-item';
+                    div.innerHTML = `<input type="text" class="spec-name" value="${escapeHtml(spec.name)}"><input type="text" class="spec-value" value="${escapeHtml(spec.value)}"><button type="button" class="remove-spec-btn" onclick="this.parentElement.remove()">✕</button>`;
+                    editSpecsContainer.appendChild(div);
+                });
+            } else {
+                const div = document.createElement('div');
+                div.className = 'specs-item';
+                div.innerHTML = `<input type="text" class="spec-name" placeholder="Название"><input type="text" class="spec-value" placeholder="Значение"><button type="button" class="remove-spec-btn" onclick="this.parentElement.remove()">✕</button>`;
+                editSpecsContainer.appendChild(div);
+            }
+        }
+        editUploadedImageDataUrl = null;
+        const preview = document.getElementById('editImagePreview');
+        const area = document.getElementById('editImageUploadArea');
+        if (preview) preview.style.display = 'none';
+        if (area) area.style.display = 'block';
+        document.getElementById('editImageFileInput').value = '';
+        document.getElementById('addProductModal')?.classList.remove('active');
+        document.getElementById('editProductModal')?.classList.add('active');
+    }
     function closeEditProductModal() { document.getElementById('editProductModal')?.classList.remove('active'); }
-    function updateProductFromForm(e) { e.preventDefault(); const id = parseInt(document.getElementById('editProductId').value); const productIndex = products.findIndex(p => p.id === id); if (productIndex === -1) return; const name = document.getElementById('editProdName').value.trim(); let img = document.getElementById('editProdImage').value.trim(); const description = document.getElementById('editProdDescription').value.trim(); const customSpecs = []; const specNames = document.querySelectorAll('#editSpecsContainer .spec-name'); const specValues = document.querySelectorAll('#editSpecsContainer .spec-value'); for (let i = 0; i < specNames.length; i++) { if (specNames[i].value.trim() && specValues[i].value.trim()) { customSpecs.push({ name: specNames[i].value.trim(), value: specValues[i].value.trim() }); } } if (!name) return alert('Введите название'); let isIcon=true, icon='fa-skiing', url=''; if (editUploadedImageDataUrl) { url=editUploadedImageDataUrl; isIcon=false; } else if (img) { if (img.startsWith('fa-')) { isIcon=true; icon=img; } else if (img.startsWith('http')) { isIcon=false; url=img; } else { isIcon=true; icon='fa-box'; } } const basicSpecs = { country: document.getElementById('editProdCountry').value.trim(), brand: document.getElementById('editProdBrand').value.trim(), model: document.getElementById('editProdModel').value.trim(), year: document.getElementById('editProdYear').value.trim(), length: document.getElementById('editProdLength').value.trim(), weight: document.getElementById('editProdWeight').value.trim(), structRange: document.getElementById('editProdStructRange').value.trim(), grindRange: document.getElementById('editProdGrindRange').value.trim(), stiffness: document.getElementById('editProdStiffness').value.trim(), trackType: document.getElementById('editProdTrackType').value, level: document.getElementById('editProdLevel').value, style: document.getElementById('editProdStyle').value, price: parseInt(document.getElementById('editProdPrice').value) || 0, icon: icon, imageUrl: url }; products[productIndex] = { ...products[productIndex], name, description: description||'Описание отсутствует', customSpecs: customSpecs, specsBasic: basicSpecs, icon: icon, imageUrl: url }; saveData(); closeEditProductModal(); fullRefreshUI(); alert(`✅ Товар "${name}" обновлён`); }
-    function addProductFromForm(e) { e.preventDefault(); const name = document.getElementById('prodName').value.trim(); const sport = document.getElementById('prodSport').value; let img = document.getElementById('prodImage').value.trim(); const desc = document.getElementById('prodDescription').value.trim(); const customSpecs = []; const specNames = document.querySelectorAll('.spec-name'); const specValues = document.querySelectorAll('.spec-value'); for (let i = 0; i < specNames.length; i++) { if (specNames[i].value.trim() && specValues[i].value.trim()) { customSpecs.push({ name: specNames[i].value.trim(), value: specValues[i].value.trim() }); } } if (!name) return alert('Введите название'); let isIcon=true, icon='fa-skiing', url=''; if (uploadedImageDataUrl) { url=uploadedImageDataUrl; isIcon=false; } else if (img) { if (img.startsWith('fa-')) { isIcon=true; icon=img; } else if (img.startsWith('http')) { isIcon=false; url=img; } else { isIcon=true; icon='fa-box'; } } const basicSpecs = { country: document.getElementById('prodCountry').value.trim(), brand: document.getElementById('prodBrand').value.trim(), model: document.getElementById('prodModel').value.trim(), year: document.getElementById('prodYear').value.trim(), length: document.getElementById('prodLength').value.trim(), weight: document.getElementById('prodWeight').value.trim(), structRange: document.getElementById('prodStructRange').value.trim(), grindRange: document.getElementById('prodGrindRange').value.trim(), stiffness: document.getElementById('prodStiffness').value.trim(), trackType: document.getElementById('prodTrackType').value, level: document.getElementById('prodLevel').value, style: document.getElementById('prodStyle').value, price: parseInt(document.getElementById('prodPrice').value) || 0, icon: icon, imageUrl: url }; products.push({ id: nextId++, name, sport, rating: null, ratingCount: 0, ratingSum: 0, description: desc||'Описание отсутствует', customSpecs: customSpecs, specsBasic: basicSpecs, icon: icon, imageUrl: url, comments: [], userRatings: {} }); saveData(); closeAddProductModal(); fullRefreshUI(); alert(`✅ Товар "${name}" добавлен`); }
+
+    function updateProductFromForm(e) {
+        e.preventDefault();
+        const id = parseInt(document.getElementById('editProductId').value);
+        const productIndex = products.findIndex(p => p.id === id);
+        if (productIndex === -1) return;
+        const name = document.getElementById('editProdName').value.trim();
+        let img = document.getElementById('editProdImage').value.trim();
+        const description = document.getElementById('editProdDescription').value.trim();
+        const customSpecs = [];
+        const specNames = document.querySelectorAll('#editSpecsContainer .spec-name');
+        const specValues = document.querySelectorAll('#editSpecsContainer .spec-value');
+        for (let i = 0; i < specNames.length; i++) {
+            if (specNames[i].value.trim() && specValues[i].value.trim()) {
+                customSpecs.push({ name: specNames[i].value.trim(), value: specValues[i].value.trim() });
+            }
+        }
+
+        // Получаем ссылки на магазины
+        const shopLinks = getShopLinksFromForm('editShopLinksContainer');
+
+        if (!name) return alert('Введите название');
+        let isIcon=true, icon='fa-skiing', url='';
+        if (editUploadedImageDataUrl) {
+            url=editUploadedImageDataUrl;
+            isIcon=false;
+        } else if (img) {
+            if (img.startsWith('fa-')) {
+                isIcon=true;
+                icon=img;
+            } else if (img.startsWith('http')) {
+                isIcon=false;
+                url=img;
+            } else {
+                isIcon=true;
+                icon='fa-box';
+            }
+        }
+        const basicSpecs = {
+            country: document.getElementById('editProdCountry').value.trim(),
+            brand: document.getElementById('editProdBrand').value.trim(),
+            model: document.getElementById('editProdModel').value.trim(),
+            year: document.getElementById('editProdYear').value.trim(),
+            length: document.getElementById('editProdLength').value.trim(),
+            weight: document.getElementById('editProdWeight').value.trim(),
+            structRange: document.getElementById('editProdStructRange').value.trim(),
+            grindRange: document.getElementById('editProdGrindRange').value.trim(),
+            stiffness: document.getElementById('editProdStiffness').value.trim(),
+            trackType: document.getElementById('editProdTrackType').value,
+            level: document.getElementById('editProdLevel').value,
+            style: document.getElementById('editProdStyle').value,
+            price: parseInt(document.getElementById('editProdPrice').value) || 0,
+            icon: icon,
+            imageUrl: url
+        };
+        products[productIndex] = {
+            ...products[productIndex],
+            name,
+            description: description||'Описание отсутствует',
+            customSpecs: customSpecs,
+            specsBasic: basicSpecs,
+            shopLinks: shopLinks,
+            icon: icon,
+            imageUrl: url
+        };
+        saveData();
+        closeEditProductModal();
+        fullRefreshUI();
+        alert(`✅ Товар "${name}" обновлён`);
+    }
+
+    function addProductFromForm(e) {
+        e.preventDefault();
+        const name = document.getElementById('prodName').value.trim();
+        const sport = document.getElementById('prodSport').value;
+        let img = document.getElementById('prodImage').value.trim();
+        const desc = document.getElementById('prodDescription').value.trim();
+        const customSpecs = [];
+        const specNames = document.querySelectorAll('.spec-name');
+        const specValues = document.querySelectorAll('.spec-value');
+        for (let i = 0; i < specNames.length; i++) {
+            if (specNames[i].value.trim() && specValues[i].value.trim()) {
+                customSpecs.push({ name: specNames[i].value.trim(), value: specValues[i].value.trim() });
+            }
+        }
+
+        // Получаем ссылки на магазины
+        const shopLinks = getShopLinksFromForm('shopLinksContainer');
+
+        if (!name) return alert('Введите название');
+        let isIcon=true, icon='fa-skiing', url='';
+        if (uploadedImageDataUrl) {
+            url=uploadedImageDataUrl;
+            isIcon=false;
+        } else if (img) {
+            if (img.startsWith('fa-')) {
+                isIcon=true;
+                icon=img;
+            } else if (img.startsWith('http')) {
+                isIcon=false;
+                url=img;
+            } else {
+                isIcon=true;
+                icon='fa-box';
+            }
+        }
+        const basicSpecs = {
+            country: document.getElementById('prodCountry').value.trim(),
+            brand: document.getElementById('prodBrand').value.trim(),
+            model: document.getElementById('prodModel').value.trim(),
+            year: document.getElementById('prodYear').value.trim(),
+            length: document.getElementById('prodLength').value.trim(),
+            weight: document.getElementById('prodWeight').value.trim(),
+            structRange: document.getElementById('prodStructRange').value.trim(),
+            grindRange: document.getElementById('prodGrindRange').value.trim(),
+            stiffness: document.getElementById('prodStiffness').value.trim(),
+            trackType: document.getElementById('prodTrackType').value,
+            level: document.getElementById('prodLevel').value,
+            style: document.getElementById('prodStyle').value,
+            price: parseInt(document.getElementById('prodPrice').value) || 0,
+            icon: icon,
+            imageUrl: url
+        };
+        products.push({
+            id: nextId++,
+            name,
+            sport,
+            rating: null,
+            ratingCount: 0,
+            ratingSum: 0,
+            description: desc||'Описание отсутствует',
+            customSpecs: customSpecs,
+            specsBasic: basicSpecs,
+            shopLinks: shopLinks,
+            icon: icon,
+            imageUrl: url,
+            comments: [],
+            userRatings: {}
+        });
+        saveData();
+        closeAddProductModal();
+        fullRefreshUI();
+        alert(`✅ Товар "${name}" добавлен`);
+    }
+
     function renderAuthForms() { const container = document.getElementById('authOrDashboard'); if (!container) return; container.innerHTML = `<div class="auth-container"><div class="auth-tabs"><button class="auth-tab active" data-auth="login">Вход</button><button class="auth-tab" data-auth="register">Регистрация</button></div><div id="loginForm" class="auth-form active-form"><input type="text" id="loginUsername" placeholder="Логин"><input type="password" id="loginPassword" placeholder="Пароль"><button class="auth-btn" id="doLoginBtn">Войти</button></div><div id="registerForm" class="auth-form"><input type="text" id="regUsername" placeholder="Логин"><input type="email" id="regEmail" placeholder="Email"><input type="password" id="regPassword" placeholder="Пароль"><input type="password" id="regConfirmPassword" placeholder="Подтвердите"><button class="auth-btn" id="doRegisterBtn">Зарегистрироваться</button></div></div><div class="theme-selector" style="margin-top:20px;"><h4>🎨 Готовые темы:</h4><div class="theme-btn" data-theme="light" style="background:#f5f7fb;"></div><div class="theme-btn" data-theme="dark" style="background:#1e1e2e;"></div><div class="theme-btn" data-theme="neonPurple" style="background:#7b2ff7;box-shadow:0 0 5px #b000ff;"></div><div class="theme-btn" data-theme="neonGreen" style="background:#00ff41;box-shadow:0 0 5px #00ff41;"></div><div class="theme-btn" data-theme="neonCyan" style="background:#00d4ff;box-shadow:0 0 5px #00d4ff;"></div><div class="theme-btn" data-theme="neonPink" style="background:#ff33cc;box-shadow:0 0 5px #ff33cc;"></div><div class="theme-btn" data-theme="neonOrange" style="background:#ff6600;box-shadow:0 0 5px #ff6600;"></div></div><div class="color-picker"><h4>🎨 Своя тема:</h4><div class="color-wheel" id="colorWheelAuth"><div class="color-option" style="background:#ff0000;"></div><div class="color-option" style="background:#00ff00;"></div><div class="color-option" style="background:#0000ff;"></div><div class="color-option" style="background:#ffff00;"></div><div class="color-option" style="background:#ff00ff;"></div><div class="color-option" style="background:#00ffff;"></div><div class="color-option" style="background:#ff6600;"></div><div class="color-option" style="background:#ff0066;"></div></div><div class="custom-color-input"><input type="color" id="customColorPickerAuth" value="#e31e24"><button id="applyCustomColorAuthBtn">Применить цвет</button></div></div>`; document.querySelectorAll('.theme-btn').forEach(btn => btn.addEventListener('click', () => applyTheme(btn.dataset.theme))); document.querySelectorAll('.color-option').forEach(opt => opt.addEventListener('click', () => applyCustomTheme(opt.style.backgroundColor))); document.getElementById('applyCustomColorAuthBtn')?.addEventListener('click', () => { const c = document.getElementById('customColorPickerAuth').value; applyCustomTheme(c); }); document.querySelectorAll('.auth-tab').forEach(t=>{t.addEventListener('click',()=>{const type=t.dataset.auth;document.querySelectorAll('.auth-tab').forEach(tt=>tt.classList.remove('active'));t.classList.add('active');document.querySelectorAll('.auth-form').forEach(f=>f.classList.remove('active-form'));document.getElementById(type==='login'?'loginForm':'registerForm')?.classList.add('active-form');});}); document.getElementById('doLoginBtn')?.addEventListener('click', login); document.getElementById('doRegisterBtn')?.addEventListener('click', register); }
-    function renderFavorites() { const container = document.getElementById('favoritesGrid'); if (!container) return; if (!currentUser) { container.innerHTML='<div class="empty-state">❤️ Войдите в аккаунт</div>'; return; } const favs = products.filter(p=>currentUser.favorites?.includes(p.id)); if (favs.length === 0) { container.innerHTML='<div class="empty-state">❤️ Нет избранных товаров</div>'; return; } container.innerHTML = favs.map(p=>{ const price = p.specsBasic?.price || 0; return `<div class="product-card" data-id="${p.id}"><div class="product-img">${renderProductImage(p)}</div><div class="product-info"><div class="product-title">${escapeHtml(p.name)}</div><div class="product-price">${price.toLocaleString()} ₽</div><div class="card-buttons"><button class="btn-inv" data-id="${p.id}"><i class="fas fa-box"></i> В инвентарь</button><button class="btn-fav active" data-id="${p.id}"><i class="fas fa-heart"></i></button></div></div></div>`; }).join(''); attachEvents(); document.querySelectorAll('#favoritesGrid .product-card').forEach(c=>c.addEventListener('click',(e)=>{if(e.target.closest('.btn-inv')||e.target.closest('.btn-fav')) return; openDetailModal(parseInt(c.dataset.id));})); }
-    function renderInventory() { const container = document.getElementById('inventoryGrid'); if (!container) return; if (!currentUser) { container.innerHTML='<div class="empty-state">📦 Войдите в аккаунт</div>'; return; } const inv = currentUser.inventory||[]; if (!inv.length) { container.innerHTML='<div class="empty-state">📦 Инвентарь пуст</div>'; return; } container.innerHTML = inv.map(i=>`<div class="product-card"><div class="product-img">${renderProductImage(i)}</div><div class="product-info"><div class="product-title">${escapeHtml(i.name)}</div><div class="product-category">${i.sport}</div><div class="product-price">${(i.price||0).toLocaleString()} ₽</div><div style="margin:10px 0;background:var(--stat-bg);padding:5px 10px;border-radius:20px;display:inline-block;">Кол-во: ${i.quantity}</div><div class="card-buttons"><button class="btn-fav remove-inv-item" data-id="${i.id}" style="background:rgba(var(--accent-rgb),0.15);color:var(--accent-color);"><i class="fas fa-trash"></i> Убрать</button></div></div></div>`).join(''); document.querySelectorAll('.remove-inv-item').forEach(b=>b.addEventListener('click',()=>removeFromInventory(parseInt(b.dataset.id)))); }
+
+    function renderFavorites() {
+        const container = document.getElementById('favoritesGrid');
+        if (!container) return;
+        if (!currentUser) { container.innerHTML='<div class="empty-state">❤️ Войдите в аккаунт</div>'; return; }
+        const favs = products.filter(p=>currentUser.favorites?.includes(p.id));
+        if (favs.length === 0) { container.innerHTML='<div class="empty-state">❤️ Нет избранных товаров</div>'; return; }
+        container.innerHTML = favs.map(p=>{
+            const price = p.specsBasic?.price || 0;
+            const inCompare = isInCompare(p.id);
+            const shopsHtml = p.shopLinks && p.shopLinks.length > 0 ? `
+                <div class="shops-icons">
+                    ${p.shopLinks.slice(0, 3).map(shop => `
+                        <a href="${shop.url}" target="_blank" class="shop-icon" title="${shop.name}" onclick="event.stopPropagation()">
+                            <i class="fas fa-store"></i>
+                        </a>
+                    `).join('')}
+                    ${p.shopLinks.length > 3 ? `<span class="more-shops">+${p.shopLinks.length-3}</span>` : ''}
+                </div>
+            ` : '';
+            return `<div class="product-card" data-id="${p.id}">
+                <div class="product-img">${renderProductImage(p)}</div>
+                <div class="product-info">
+                    <div class="product-title">${escapeHtml(p.name)}</div>
+                    <div class="product-price">${price.toLocaleString()} ₽</div>
+                    ${shopsHtml}
+                    <div class="card-buttons">
+                        <button class="btn-inv" data-id="${p.id}"><i class="fas fa-box"></i> В инвентарь</button>
+                        <button class="btn-fav active" data-id="${p.id}"><i class="fas fa-heart"></i></button>
+                        <button class="btn-compare ${inCompare?'active':''}" data-id="${p.id}"><i class="fas fa-chart-line"></i></button>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+        attachEvents();
+        document.querySelectorAll('#favoritesGrid .product-card').forEach(c=>c.addEventListener('click',(e)=>{if(e.target.closest('.btn-inv')||e.target.closest('.btn-fav')||e.target.closest('.btn-compare')||e.target.closest('.shop-icon')) return; openDetailModal(parseInt(c.dataset.id));}));
+    }
+
+    function renderInventory() {
+        const container = document.getElementById('inventoryGrid');
+        if (!container) return;
+        if (!currentUser) { container.innerHTML='<div class="empty-state">📦 Войдите в аккаунт</div>'; return; }
+        const inv = currentUser.inventory||[];
+        if (!inv.length) { container.innerHTML='<div class="empty-state">📦 Инвентарь пуст</div>'; return; }
+        container.innerHTML = inv.map(i=>{
+            const inCompare = isInCompare(i.id);
+            const product = products.find(p => p.id === i.id);
+            const shopsHtml = product?.shopLinks && product.shopLinks.length > 0 ? `
+                <div class="shops-icons">
+                    ${product.shopLinks.slice(0, 3).map(shop => `
+                        <a href="${shop.url}" target="_blank" class="shop-icon" title="${shop.name}" onclick="event.stopPropagation()">
+                            <i class="fas fa-store"></i>
+                        </a>
+                    `).join('')}
+                    ${product.shopLinks.length > 3 ? `<span class="more-shops">+${product.shopLinks.length-3}</span>` : ''}
+                </div>
+            ` : '';
+            return `<div class="product-card">
+                <div class="product-img">${renderProductImage(i)}</div>
+                <div class="product-info">
+                    <div class="product-title">${escapeHtml(i.name)}</div>
+                    <div class="product-category">${i.sport}</div>
+                    <div class="product-price">${(i.price||0).toLocaleString()} ₽</div>
+                    <div style="margin:10px 0;background:var(--stat-bg);padding:5px 10px;border-radius:20px;display:inline-block;">Кол-во: ${i.quantity}</div>
+                    ${shopsHtml}
+                    <div class="card-buttons">
+                        <button class="btn-fav remove-inv-item" data-id="${i.id}" style="background:rgba(var(--accent-rgb),0.15);color:var(--accent-color);"><i class="fas fa-trash"></i> Убрать</button>
+                        <button class="btn-compare ${inCompare?'active':''}" data-id="${i.id}"><i class="fas fa-chart-line"></i></button>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+        document.querySelectorAll('.remove-inv-item').forEach(b=>b.addEventListener('click',()=>removeFromInventory(parseInt(b.dataset.id))));
+        attachEvents();
+    }
+
     function renderAdminList() { const container = document.getElementById('adminProductList'); if (!container) return; if (!products.length) { container.innerHTML='<div class="empty-state">📦 Товаров нет</div>'; return; } container.innerHTML = products.map(p=>{ const price = p.specsBasic?.price || 0; return `<div class="product-card"><div class="product-img">${renderProductImage(p)}</div><div class="product-info"><div class="product-title">${escapeHtml(p.name)}</div><div class="product-price">${price.toLocaleString()} ₽</div><div class="product-description">${escapeHtml((p.description||'').substring(0,50))}...</div><div class="admin-actions"><button class="edit-product-btn" data-id="${p.id}"><i class="fas fa-edit"></i> Редактировать</button><button class="delete-product-btn" data-id="${p.id}"><i class="fas fa-trash"></i> Удалить</button></div></div></div>`; }).join(''); document.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', () => openEditProductModal(parseInt(btn.dataset.id)))); document.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', () => { if (confirm('Удалить товар?')) { const id = parseInt(btn.dataset.id); products = products.filter(p => p.id !== id); saveData(); fullRefreshUI(); if (currentUser?.isAdmin) renderDashboard(); } })); }
     function register() { const u=document.getElementById('regUsername')?.value.trim()||'', e=document.getElementById('regEmail')?.value.trim()||'', p=document.getElementById('regPassword')?.value||'', c=document.getElementById('regConfirmPassword')?.value||''; if(!u||!e||!p) return alert('Заполните поля'); if(p!==c) return alert('Пароли не совпадают'); if(users.find(uu=>uu.username===u)) return alert('Логин занят'); users.push({username:u,email:e,password:p,isAdmin:false,createdAt:new Date().toLocaleString(),inventory:[],favorites:[]}); saveData(); alert('Регистрация успешна! Войдите.'); document.querySelector('.auth-tab[data-auth="login"]')?.click(); }
     function login() { const u=document.getElementById('loginUsername')?.value.trim()||'', p=document.getElementById('loginPassword')?.value||''; if(u===ADMIN_CREDENTIALS.login&&p===ADMIN_CREDENTIALS.password){currentUser={username:"admin",isAdmin:true,createdAt:"01.01.2025",inventory:[],favorites:[]};lastLoginDate=new Date().toLocaleString();saveData();alert('Добро пожаловать, админ!');updateUI();document.querySelector('.shop-tab[data-tab="catalog"]')?.click();return;} const user=users.find(uu=>uu.username===u&&uu.password===p); if(user){currentUser=user;if(!currentUser.inventory)currentUser.inventory=[];if(!currentUser.favorites)currentUser.favorites=[];lastLoginDate=new Date().toLocaleString();saveData();alert(`Добро пожаловать, ${u}!`);updateUI();document.querySelector('.shop-tab[data-tab="catalog"]')?.click();}else alert('Неверный логин или пароль'); }
     function logout() { currentUser=null; lastLoginDate=null; saveData(); alert('Вы вышли'); updateUI(); document.querySelector('.shop-tab[data-tab="catalog"]')?.click(); fullRefreshUI(); }
     function updateUI() { const btn=document.getElementById('loginBtnText'), tab=document.getElementById('profileTabBtn'); if(currentUser){btn.innerHTML=`${currentUser.username} <i class="fas fa-sign-out-alt"></i>`;tab.innerHTML=`👤 ${currentUser.username}`;renderDashboard();}else{btn.innerHTML='Войти';tab.innerHTML='👤 Войти';renderAuthForms();} fullRefreshUI(); }
-    function attachEvents() { document.querySelectorAll('.btn-inv').forEach(b=>{b.onclick=(e)=>{e.stopPropagation();const id=parseInt(b.dataset.id);if(isInInventory(id))removeFromInventory(id);else addToInventory(id);};}); document.querySelectorAll('.btn-fav').forEach(b=>{b.onclick=(e)=>{e.stopPropagation();toggleFavorite(parseInt(b.dataset.id));};}); }
+    function attachEvents() {
+        document.querySelectorAll('.btn-inv').forEach(b=>{b.onclick=(e)=>{e.stopPropagation();const id=parseInt(b.dataset.id);if(isInInventory(id))removeFromInventory(id);else addToInventory(id);};});
+        document.querySelectorAll('.btn-fav').forEach(b=>{b.onclick=(e)=>{e.stopPropagation();toggleFavorite(parseInt(b.dataset.id));};});
+        document.querySelectorAll('.btn-compare').forEach(b=>{b.onclick=(e)=>{e.stopPropagation();const id=parseInt(b.dataset.id);toggleCompare(id);renderCatalog();renderFavorites();renderInventory();};});
+    }
     function escapeHtml(s){if(!s)return '';return s.replace(/[&<>]/g,m=>m==='&'?'&amp;':m==='<'?'&lt;':'&gt;');}
     function initTabs(){document.querySelectorAll('.shop-tab').forEach(t=>{t.addEventListener('click',()=>{const target=t.dataset.tab;document.querySelectorAll('.shop-tab').forEach(tt=>tt.classList.remove('active'));t.classList.add('active');document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active-pane'));if(target==='catalog')document.getElementById('catalog-tab')?.classList.add('active-pane');if(target==='favorites'){document.getElementById('favorites-tab')?.classList.add('active-pane');renderFavorites();}if(target==='inventory'){document.getElementById('inventory-tab')?.classList.add('active-pane');renderInventory();}if(target==='login')document.getElementById('login-tab')?.classList.add('active-pane');});});}
 
+    document.getElementById('openCompareBtnHeader')?.addEventListener('click',()=>openCompareModal());
     document.getElementById('openFavBtnHeader')?.addEventListener('click',()=>document.querySelector('.shop-tab[data-tab="favorites"]')?.click());
     document.getElementById('openInventoryBtnHeader')?.addEventListener('click',()=>document.querySelector('.shop-tab[data-tab="inventory"]')?.click());
     document.getElementById('openLoginBtnHeader')?.addEventListener('click',()=>{if(currentUser){if(confirm('Выйти?'))logout();}else document.querySelector('.shop-tab[data-tab="login"]')?.click();});
@@ -646,10 +1688,23 @@
     document.getElementById('editProductForm')?.addEventListener('submit',updateProductFromForm);
     document.getElementById('addSpecBtn')?.addEventListener('click',()=>{const c=document.getElementById('specsContainer');if(c){const d=document.createElement('div');d.className='specs-item';d.innerHTML=`<input type="text" class="spec-name" placeholder="Название"><input type="text" class="spec-value" placeholder="Значение"><button type="button" class="remove-spec-btn" onclick="this.parentElement.remove()">✕</button>`;c.appendChild(d);}});
     document.getElementById('editAddSpecBtn')?.addEventListener('click',()=>{const c=document.getElementById('editSpecsContainer');if(c){const d=document.createElement('div');d.className='specs-item';d.innerHTML=`<input type="text" class="spec-name" placeholder="Название"><input type="text" class="spec-value" placeholder="Значение"><button type="button" class="remove-spec-btn" onclick="this.parentElement.remove()">✕</button>`;c.appendChild(d);}});
-    window.addEventListener('click',(e)=>{if(e.target===document.getElementById('addProductModal'))closeAddProductModal();if(e.target===document.getElementById('editProductModal'))closeEditProductModal();if(e.target===document.getElementById('detailModal'))closeDetailModal();});
+    window.addEventListener('click',(e)=>{if(e.target===document.getElementById('addProductModal'))closeAddProductModal();if(e.target===document.getElementById('editProductModal'))closeEditProductModal();if(e.target===document.getElementById('detailModal'))closeDetailModal();if(e.target===document.getElementById('compareModal'))closeCompareModal();});
     document.getElementById('detailCloseBtn')?.addEventListener('click',closeDetailModal);
+    document.getElementById('compareCloseBtn')?.addEventListener('click',closeCompareModal);
 
-    setupImageUpload(); setupEditImageUpload(); loadData(); loadTheme(); collectFilterOptions(); initFilterSections(); renderCatalog(); renderFavorites(); renderInventory(); updateCounters(); initTabs(); updateUI();
+    setupImageUpload();
+    setupEditImageUpload();
+    setupShopLinks();  // Инициализируем функционал магазинов
+    loadData();
+    loadTheme();
+    collectFilterOptions();
+    initFilterSections();
+    renderCatalog();
+    renderFavorites();
+    renderInventory();
+    updateCounters();
+    initTabs();
+    updateUI();
 </script>
 </body>
 </html>
